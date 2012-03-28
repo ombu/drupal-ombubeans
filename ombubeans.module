@@ -1,0 +1,114 @@
+<?php
+/**
+ * @file
+ */
+
+// include_once('ombubeans.features.inc');
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function ombubeans_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function ombubeans_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'ombubeans');
+
+  $plugins['ombubeans_twitter'] = array(
+    'label' => t('Twitter Block'),
+    'handler' => array(
+      'class' => 'ombubeans_twitter',
+      'parent' => 'bean_plugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'ombubeans.bean.inc',
+    'editable' => TRUE,
+  );
+
+  $plugins['ombubeans_sociallinks'] = array(
+    'label' => t('Social Media Links'),
+    'handler' => array(
+      'class' => 'ombubeans_sociallinks',
+      'parent' => 'bean_plugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'ombubeans.bean.inc',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function ombubeans_preprocess_block(&$variables) {
+  if ($variables['block']->module == 'bean') {
+    // Get bean object.
+    $bean = isset($variables['elements']['content']['bean']) ? $variables['elements']['content']['bean'] : $variables['elements']['bean'];
+    $bid = current(element_children($bean));
+    $bean = $bean[$bid]['#entity'];
+
+    if (isset($bean->width)) {
+      $variables['classes_array'][] = $bean->width;
+    }
+
+    // Add classes based on bean type.
+    $variables['classes_array'][] = str_replace('_', '-', $bean->type);
+  }
+}
+
+/**
+ * Implements hook_menu()
+ */
+function ombubeans_menu() {
+  $items = array();
+
+  // Test page with all available beans.
+  $items['all-modules'] = array(
+    'title' => 'Available Modules',
+    'page callback' => 'ombubeans_bean_test_page',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Page Callback: shows all created beans on the site.
+ */
+function ombubeans_bean_test_page() {
+  $content = array();
+  $blocks = bean_block_info();
+  foreach ($blocks as $delta => $block) {
+    // Don't show duplicate blocks.
+    if (preg_match('/-\d+$/', $delta)) {
+      continue;
+    }
+    $block = block_load('bean', $delta);
+    $block->region = 'content';
+    $block_content = _block_render_blocks(array($block));
+    $build = _block_get_renderable_array($block_content);
+    $content[$delta] = $build;
+  }
+
+  // Show other static blocks too.
+  $other_blocks = array(
+    'stand_newsletter' => 'newsletter',
+  );
+  foreach ($other_blocks as $module => $delta) {
+    $block = block_load($module, $delta);
+    $block_content = _block_render_blocks(array($block));
+    $build = _block_get_renderable_array($block_content);
+    $content[$delta] = $build;
+  }
+  return $content;
+}
+

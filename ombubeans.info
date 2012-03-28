@@ -1,0 +1,15 @@
+; $Id$
+name = "OMBU Beans"
+description = "Provides OMBU Beans"
+package = 'OMBU'
+core = 7.x
+php = 5.3
+
+dependencies[] = "features"
+dependencies[] = "bean"
+; dependencies[] = "image"
+; dependencies[] = "link"
+; dependencies[] = "media"
+; dependencies[] = "video_embed_field"
+; features[field][] = "bean-stand_bean_campaign_callout-field_body"
+files[] = "ombubeans.bean.inc"
