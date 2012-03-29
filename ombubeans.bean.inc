@@ -8,36 +8,57 @@
  * Base bean class for all stand beans.
  */
 class ombubeans_base extends bean_plugin {
+  public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+    return $content;
+  }
+}
+
+
+/**
+ * FPO block bean.
+ */
+class ombubeans_fpo extends ombubeans_base {
   public function values() {
-    $values = array(); //parent::values();
+    $values = parent::values();
     $values += array(
-      'width' => 'narrow',
+      'width'  => 250,
+      'height' => 100,
     );
     return $values;
   }
 
   public function form($bean, $form, &$form_state) {
-    // Add a selection for block size.
+    $form = parent::form($bean, $form, $form_state);
+
     $form['width'] = array(
-      '#title' => t('Block Width'),
+      '#title' => t('Width 1-12'),
       '#type' => 'select',
-      '#options' => array(
-        'narrow' => 'Narrow',
-        'wide' => 'Wide',
-      ),
-      '#description' => t('Select the width of this block.'),
+      '#options' => drupal_map_assoc(array(1,2,3,4,5,6,7,8,9,10,11,12)),
+      '#required' => TRUE,
       '#default_value' => $bean->width,
-      '#weight' => -5,
+      '#description' => t('In px'),
+    );
+
+    $form['height'] = array(
+      '#title' => t('Height '),
+      '#type' => 'textfield',
+      '#required' => TRUE,
+      '#default_value' => $bean->height,
+      '#description' => t('In px'),
     );
 
     return $form;
   }
 
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+
+    $gridWidth = 75;
+    $content['bean']['fpo_block'] = array(
+        '#markup' => sprintf('<a class="thumbnail" href="#">%d</a>', $bean->width),
+    );
     return $content;
   }
 }
-
 
 /**
  * Twitter feed bean.

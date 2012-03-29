@@ -21,6 +21,17 @@ function ombubeans_bean_types() {
   $plugins = array();
   $plugin_path = drupal_get_path('module', 'ombubeans');
 
+  $plugins['ombubeans_fpo'] = array(
+    'label' => t('FPO Block'),
+    'handler' => array(
+      'class' => 'ombubeans_fpo',
+      'parent' => 'bean_plugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'ombubeans.bean.inc',
+    'editable' => TRUE,
+  );
+
   $plugins['ombubeans_twitter'] = array(
     'label' => t('Twitter Block'),
     'handler' => array(
@@ -57,7 +68,7 @@ function ombubeans_preprocess_block(&$variables) {
     $bean = $bean[$bid]['#entity'];
 
     if (isset($bean->width)) {
-      $variables['classes_array'][] = $bean->width;
+      $variables['classes_array'][] = 'span' . $bean->width;
     }
 
     // Add classes based on bean type.
