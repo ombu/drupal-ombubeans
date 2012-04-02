@@ -32,6 +32,17 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
+  $plugins['ombubeans_fpohero'] = array(
+    'label' => t('FPO Hero Block'),
+    'handler' => array(
+      'class' => 'ombubeans_fpohero',
+      'parent' => 'bean_plugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'ombubeans.bean.inc',
+    'editable' => TRUE,
+  );
+
   $plugins['ombubeans_twitter'] = array(
     'label' => t('Twitter Block'),
     'handler' => array(

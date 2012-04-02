@@ -31,12 +31,11 @@ class ombubeans_fpo extends ombubeans_base {
     $form = parent::form($bean, $form, $form_state);
 
     $form['width'] = array(
-      '#title' => t('Width 1-12'),
+      '#title' => t('Width'),
       '#type' => 'select',
-      '#options' => drupal_map_assoc(array(1,2,3,4,5,6,7,8,9,10,11,12)),
+      '#options' => _ombubeans_grid_width(),
       '#required' => TRUE,
       '#default_value' => $bean->width,
-      '#description' => t('In px'),
     );
 
     $form['height'] = array(
@@ -53,6 +52,56 @@ class ombubeans_fpo extends ombubeans_base {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     $content['bean'][$bean->bid][] = array(
         '#markup' => sprintf('<a class="thumbnail" href="#">%d</a>', $bean->width),
+    );
+    return $content;
+  }
+}
+
+/**
+ * FPO Hero block bean.
+ */
+class ombubeans_fpohero extends ombubeans_base {
+  public function values() {
+    $values = parent::values();
+    $values += array(
+      'body'  => 'Hello World',
+      'width'  => '12',
+    );
+    return $values;
+  }
+
+  public function form($bean, $form, &$form_state) {
+    $form = parent::form($bean, $form, $form_state);
+
+    $form['width'] = array(
+      '#title' => t('Width 1-12'),
+      '#type' => 'select',
+      '#options' => _ombubeans_grid_width(),
+      '#required' => TRUE,
+      '#default_value' => $bean->width,
+      '#description' => t('In px'),
+    );
+
+    $form['body'] = array(
+      '#title' => t('Body'),
+      '#type' => 'textarea',
+      '#required' => TRUE,
+      '#default_value' => $bean->body,
+      '#description' => t('In px'),
+    );
+
+    return $form;
+  }
+
+  public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+    $content['bean'][$bean->bid][] = array(
+        '#markup' => sprintf(<<<EOF
+<div class="hero-unit">
+  <h1>%s</h1>
+  <p>%s</p>
+</div>
+EOF
+    , $bean->body, $bean->body),
     );
     return $content;
   }
@@ -174,3 +223,10 @@ class ombubeans_sociallinks extends ombubeans_base {
   }
 }
 
+function _ombubeans_grid_width() {
+    $out = array();
+    for($i=1, $l=12; $i<= $l; $i++) {
+        $out[$i] = round($i * 100 / 12, 0.1) . '%';
+    }
+    return $out;
+}
