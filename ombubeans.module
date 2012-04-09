@@ -25,7 +25,7 @@ function ombubeans_bean_types() {
     'label' => t('FPO Block'),
     'handler' => array(
       'class' => 'ombubeans_fpo',
-      'parent' => 'bean_plugin',
+      'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
     'file' => 'ombubeans.bean.inc',
@@ -36,7 +36,7 @@ function ombubeans_bean_types() {
     'label' => t('FPO Hero Block'),
     'handler' => array(
       'class' => 'ombubeans_fpohero',
-      'parent' => 'bean_plugin',
+      'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
     'file' => 'ombubeans.bean.inc',
@@ -47,7 +47,7 @@ function ombubeans_bean_types() {
     'label' => t('Twitter Block'),
     'handler' => array(
       'class' => 'ombubeans_twitter',
-      'parent' => 'bean_plugin',
+      'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
     'file' => 'ombubeans.bean.inc',
@@ -58,7 +58,7 @@ function ombubeans_bean_types() {
     'label' => t('Social Media Links'),
     'handler' => array(
       'class' => 'ombubeans_sociallinks',
-      'parent' => 'bean_plugin',
+      'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
     'file' => 'ombubeans.bean.inc',
