@@ -7,7 +7,7 @@
 /**
  * Base bean class for all stand beans.
  */
-class ombubeans_base extends bean_plugin {
+class ombubeans_base extends BeanPlugin {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     return $content;
   }
