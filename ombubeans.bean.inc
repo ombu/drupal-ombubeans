@@ -21,7 +21,6 @@ class ombubeans_fpo extends ombubeans_base {
   public function values() {
     $values = parent::values();
     $values += array(
-      'width'  => 250,
       'height' => 100,
     );
     return $values;
@@ -29,14 +28,6 @@ class ombubeans_fpo extends ombubeans_base {
 
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
-
-    $form['width'] = array(
-      '#title' => t('Width'),
-      '#type' => 'select',
-      '#options' => _ombubeans_grid_width(),
-      '#required' => TRUE,
-      '#default_value' => $bean->width,
-    );
 
     $form['height'] = array(
       '#title' => t('Height '),
@@ -72,15 +63,6 @@ class ombubeans_fpohero extends ombubeans_base {
 
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
-
-    $form['width'] = array(
-      '#title' => t('Width 1-12'),
-      '#type' => 'select',
-      '#options' => _ombubeans_grid_width(),
-      '#required' => TRUE,
-      '#default_value' => $bean->width,
-      '#description' => t('In px'),
-    );
 
     $form['body'] = array(
       '#title' => t('Body'),
@@ -221,12 +203,4 @@ class ombubeans_sociallinks extends ombubeans_base {
     }
     return $content;
   }
-}
-
-function _ombubeans_grid_width() {
-    $out = array();
-    for($i=1, $l=12; $i<= $l; $i++) {
-        $out[$i] = round($i * 100 / 12, 0.1) . '%';
-    }
-    return $out;
 }
