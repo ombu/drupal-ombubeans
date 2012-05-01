@@ -205,3 +205,71 @@ class ombubeans_sociallinks extends ombubeans_base {
     return $content;
   }
 }
+
+/**
+ * Solr Query bean.
+ */
+class OmbubeansSolrQuery extends ombubeans_base {
+
+  public function values() {
+    $values = parent::values();
+    $values['params'] = '';
+    $values['use_pager'] = FALSE;
+    return $values;
+  }
+
+  public function form($bean, $form, &$form_state) {
+
+    $form['solr'] = array(
+      '#title' => t('Solr Query'),
+      '#type' => 'fieldset',
+      '#collapsible' => FALSE,
+    );
+
+    $default_ini = <<<HEREDOC
+rows = 10
+fq = 'bundle:article'
+sort = 'bs_sticky desc, ds_created desc'
+HEREDOC;
+
+    $form['solr']['params'] = array(
+      '#title' => t('Params'),
+      '#type' => 'textarea',
+      '#default_value' => !empty($bean->params) ? $bean->params : $default_ini,
+      '#description' => "Enter your solr params in ini format.",
+    );
+
+    $form['solr']['use_pager'] = array(
+      '#title' => t('Use Pager'),
+      '#type' => 'checkbox',
+      '#default_value' => !empty($bean->use_pager) ? $bean->use_pager : FALSE,
+    );
+
+    return $form;
+  }
+
+  public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+
+    $params = parse_ini_string($bean->params);
+    $results = apachesolr_search_run('apachesolr', $params, '', '', pager_find_page());
+
+    $content['bean'][$bean->bid]['solr'] = array();
+    foreach ($results as $array) {
+      $node = node_load($array['node']->entity_id);
+
+      if ($view_mode === 'teaser') {
+        $content['bean'][$bean->bid]['solr'][] = node_view($node, 'teaser');
+      }
+    }
+
+    if ($bean->use_pager) {
+      $content['bean'][$bean->bid]['pager'] = array(
+        '#theme' => 'pager',
+        'tags' => NULL,
+      );
+    }
+
+    return $content;
+  }
+
+}

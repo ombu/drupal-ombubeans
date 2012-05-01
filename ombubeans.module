@@ -65,6 +65,17 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
+  $plugins['ombubeans_solrquery'] = array(
+    'label' => t('Solr Query'),
+    'handler' => array(
+      'class' => 'OmbubeansSolrQuery',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'ombubeans.bean.inc',
+    'editable' => TRUE,
+  );
+
   return $plugins;
 }
 
@@ -134,3 +145,11 @@ function ombubeans_bean_test_page() {
   return $content;
 }
 
+/**
+ * Implements hook_form_alter().
+ */
+function ombubeans_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id === 'bean_form' && $form['#bundle'] === 'ombubeans_solrquery') {
+    $form['view_mode']['#options']['teaser'] = t('Teaser');
+  }
+}
