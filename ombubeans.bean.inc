@@ -126,13 +126,14 @@ class ombubeans_twitter extends ombubeans_base {
         type: 'profile',
         rpp: 10,
         interval: 30000,
+        width: 'auto',
         theme: {
           shell: {
-            background: '#ffffff',
-            color: '#ffffff'
+            background: 'transparent',
+            color: '#333333'
           },
           tweets: {
-            background: '#ffffff',
+            background: 'transparent'
           }
         },
         features: {
