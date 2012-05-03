@@ -160,51 +160,7 @@ EOD;
 /**
  * Social Media Links bean.
  */
-class ombubeans_sociallinks extends ombubeans_base {
-
-  public $services = array('Facebook', 'Twitter', 'Pinterest', 'YouTube', 'RSS');
-
-  public function values() {
-    $values = parent::values();
-    foreach ($this->services as $service) {
-      $values[$service] = '';
-    };
-    return $values;
-  }
-
-  public function form($bean, $form, &$form_state) {
-    $form = parent::form($bean, $form, $form_state);
-
-    foreach ($this->services as $service) {
-      $form[$service] = array(
-        '#title' => t('@service Handle', array('@service' => $service)),
-        '#type' => 'textfield',
-        '#default_value' => empty($bean->$service) ? '' : $bean->$service,
-        '#description' => t('The @service handle for this block.',
-          array('@service' => $service)),
-      );
-    };
-    return $form;
-  }
-
-  public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    foreach ($this->services as $service) {
-      if(empty($bean->$service)) continue;
-      $content['bean'][$bean->bid][$service] = array(
-        '#theme' => 'link',
-        '#text' => $service,
-        '#path' => $bean->$service,
-        '#options' => array(
-          'attributes' => array(
-            'class' => strtolower($service),
-          ),
-          'html' => true,
-        ),
-      );
-    }
-    return $content;
-  }
-}
+class ombubeans_sociallinks extends ombubeans_base {}
 
 /**
  * Solr Query bean.
