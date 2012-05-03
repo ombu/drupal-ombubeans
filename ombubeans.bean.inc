@@ -171,6 +171,7 @@ class OmbubeansSolrQuery extends ombubeans_base {
   public function values() {
     $values = parent::values();
     $values['params'] = '';
+    $values['results_view_mode'] = 'teaser';
     $values['use_pager'] = FALSE;
     return $values;
   }
@@ -196,6 +197,20 @@ HEREDOC;
       '#description' => "Enter your solr params in ini format.",
     );
 
+    $entity_info = entity_get_info('node');
+    $view_mode_options = array();
+    foreach ($entity_info['view modes'] as $machine_name => $info) {
+      if ($info['custom settings'] === TRUE) {
+        $view_mode_options[$machine_name] = $info['label'];
+      }
+    }
+    $form['solr']['results_view_mode'] = array(
+      '#title' => t('Results View Mode'),
+      '#type' => 'select',
+      '#options' => $view_mode_options,
+      '#description' => 'Select how you would like the node results to be displayed',
+    );
+
     $form['solr']['use_pager'] = array(
       '#title' => t('Use Pager'),
       '#type' => 'checkbox',
@@ -213,10 +228,7 @@ HEREDOC;
     $content['bean'][$bean->bid]['solr'] = array();
     foreach ($results as $array) {
       $node = node_load($array['node']->entity_id);
-
-      if ($view_mode === 'teaser') {
-        $content['bean'][$bean->bid]['solr'][] = node_view($node, 'teaser');
-      }
+      $content['bean'][$bean->bid]['solr'][] = node_view($node, $bean->results_view_mode);
     }
 
     if ($bean->use_pager) {
