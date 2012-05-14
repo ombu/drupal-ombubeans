@@ -65,17 +65,6 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
-  $plugins['ombubeans_solrquery'] = array(
-    'label' => t('Solr Query'),
-    'handler' => array(
-      'class' => 'OmbubeansSolrQuery',
-      'parent' => 'BeanPlugin',
-    ),
-    'path' => $plugin_path,
-    'file' => 'ombubeans.bean.inc',
-    'editable' => TRUE,
-  );
-
   return $plugins;
 }
 
