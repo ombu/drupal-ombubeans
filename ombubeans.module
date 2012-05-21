@@ -65,6 +65,17 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
+  $plugins['ombubeans_popular_content'] = array(
+    'label' => t('Most Popular Content'),
+    'handler' => array(
+      'class' => 'OmbubeansPopularContent',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path . '/includes',
+    'file' => 'OmbubeansPopularContent.class.php',
+    'editable' => TRUE,
+  );
+
   return $plugins;
 }
 
