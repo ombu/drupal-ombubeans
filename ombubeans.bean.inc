@@ -189,5 +189,5 @@ EOD;
  *
  * Placeholder class.  The field is applied to the entity via features.
  */
-class ombubeans_sociallinks extends ombubeans_base {}
+/* class ombubeans_sociallinks extends ombubeans_base {} */
 
