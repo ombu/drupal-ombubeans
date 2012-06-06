@@ -13,6 +13,31 @@ class ombubeans_base extends BeanPlugin {
   }
 }
 
+class ombubeans_color extends BeanPlugin {
+
+  public function values() {
+    $values = parent::values();
+    $values['color'] = 'pink';
+    return $values;
+  }
+
+  public function form($bean, $form, &$form_state) {
+    $form = parent::form($bean, $form, &$form_state);
+    $form['color'] = array(
+      '#type' => 'select',
+      '#title' => t('Color'),
+      '#options' => array(
+        'blue' => 'Blue',
+        'light-blue' => 'Light Blue',
+        'orange' => 'Orange'
+      ),
+      '#default_value' => !empty($bean->color) ? $bean->color : 'blue',
+      '#description' => t('Select the main color for this block.'),
+    );
+    return $form;
+  }
+}
+
 
 /**
  * FPO block bean.
@@ -58,6 +83,7 @@ class ombubeans_fpohero extends ombubeans_base {
     $values += array(
       'body'  => 'Hello World',
       'width'  => '12',
+      'color'  => 'blue',
     );
     return $values;
   }

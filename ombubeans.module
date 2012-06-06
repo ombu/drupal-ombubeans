@@ -92,6 +92,9 @@ function ombubeans_preprocess_block(&$variables) {
     if (isset($bean->width)) {
       $variables['classes_array'][] = 'span' . $bean->width;
     }
+    if (isset($bean->color)) {
+      $variables['classes_array'][] = $bean->color;
+    }
 
     // Add classes based on bean type.
     $variables['classes_array'][] = str_replace('_', '-', $bean->type);
