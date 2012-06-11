@@ -22,7 +22,7 @@ class ombubeans_color extends BeanPlugin {
   }
 
   public function form($bean, $form, &$form_state) {
-    $form = parent::form($bean, $form, &$form_state);
+    $form = parent::form($bean, $form, $form_state);
     $form['color'] = array(
       '#type' => 'select',
       '#title' => t('Color'),
