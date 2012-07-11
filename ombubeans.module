@@ -21,27 +21,30 @@ function ombubeans_bean_types() {
   $plugins = array();
   $plugin_path = drupal_get_path('module', 'ombubeans');
 
-  $plugins['ombubeans_fpo'] = array(
-    'label' => t('FPO Block'),
-    'handler' => array(
-      'class' => 'ombubeans_fpo',
-      'parent' => 'BeanPlugin',
-    ),
-    'path' => $plugin_path,
-    'file' => 'ombubeans.bean.inc',
-    'editable' => TRUE,
-  );
+  // Only allow FPO blocks on development environments.
+  if (variable_get('environment', 'development') == 'development') {
+    $plugins['ombubeans_fpo'] = array(
+      'label' => t('FPO Block'),
+      'handler' => array(
+        'class' => 'ombubeans_fpo',
+        'parent' => 'BeanPlugin',
+      ),
+      'path' => $plugin_path,
+      'file' => 'ombubeans.bean.inc',
+      'editable' => TRUE,
+    );
 
-  $plugins['ombubeans_fpohero'] = array(
-    'label' => t('FPO Hero Block'),
-    'handler' => array(
-      'class' => 'ombubeans_fpohero',
-      'parent' => 'BeanPlugin',
-    ),
-    'path' => $plugin_path,
-    'file' => 'ombubeans.bean.inc',
-    'editable' => TRUE,
-  );
+    $plugins['ombubeans_fpohero'] = array(
+      'label' => t('FPO Hero Block'),
+      'handler' => array(
+        'class' => 'ombubeans_fpohero',
+        'parent' => 'BeanPlugin',
+      ),
+      'path' => $plugin_path,
+      'file' => 'ombubeans.bean.inc',
+      'editable' => TRUE,
+    );
+  }
 
   $plugins['ombubeans_twitter'] = array(
     'label' => t('Twitter Block'),
