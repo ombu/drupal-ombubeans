@@ -1,0 +1,11 @@
+name = Links Bean
+description = Provides a links field and bean
+core = 7.x
+package = Other
+php = 5.3
+dependencies[] = bean
+dependencies[] = features
+dependencies[] = field
+dependencies[] = link
+features[features_api][] = api:1
+features[field][] = bean-linkbean-field_linkbean_links

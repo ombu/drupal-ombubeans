@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Something about the file
+ */
+
+
+/**
+ * Hooks
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function linkbean_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function linkbean_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'linkbean');
+
+  $plugins['linkbean'] = array(
+    'label' => t('Links'),
+    'handler' => array(
+      'class' => 'Linkbean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'Linkbean.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
