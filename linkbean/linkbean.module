@@ -29,11 +29,11 @@ function linkbean_bean_types() {
   $plugins['linkbean'] = array(
     'label' => t('Links'),
     'handler' => array(
-      'class' => 'Linkbean',
+      'class' => 'LinkBean',
       'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
-    'file' => 'Linkbean.class.php',
+    'file' => 'LinkBean.class.php',
     'editable' => TRUE,
   );
 
