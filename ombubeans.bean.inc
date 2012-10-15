@@ -106,11 +106,10 @@ class ombubeans_fpohero extends ombubeans_base {
     $content['bean'][$bean->bid][] = array(
         '#markup' => sprintf(<<<EOF
 <div class="hero-unit">
-  <h1>%s</h1>
-  <p>%s</p>
+  %s
 </div>
 EOF
-    , $bean->body, $bean->body),
+    , $bean->body),
     );
     return $content;
   }
