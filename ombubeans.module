@@ -57,17 +57,6 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
-  /* $plugins['ombubeans_sociallinks'] = array( */
-  /*   'label' => t('Social Media Links'), */
-  /*   'handler' => array( */
-  /*     'class' => 'ombubeans_sociallinks', */
-  /*     'parent' => 'BeanPlugin', */
-  /*   ), */
-  /*   'path' => $plugin_path, */
-  /*   'file' => 'ombubeans.bean.inc', */
-  /*   'editable' => TRUE, */
-  /* ); */
-
   $plugins['ombubeans_popular_content'] = array(
     'label' => t('Most Popular Content'),
     'handler' => array(
