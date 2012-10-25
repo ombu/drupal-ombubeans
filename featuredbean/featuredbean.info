@@ -1,0 +1,9 @@
+name = Featured Content Bean
+description = Provides a bean that shows a selected list of content.
+core = 7.x
+package = Other
+php = 5.3
+dependencies[] = bean
+dependencies[] = features
+dependencies[] = field
+dependencies[] = node_reference
