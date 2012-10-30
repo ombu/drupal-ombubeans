@@ -50,10 +50,12 @@ class FeaturedBean extends BeanPlugin {
    * Implements the view method for this class
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    $node_view_mode = $bean->content_display_mode;
-    foreach (element_children($content['bean'][$bean->bid]['field_featured_content']) as $i) {
-      $node = $content['bean'][$bean->bid]['field_featured_content'][$i]['#options']['entity'];
-      $content['bean'][$bean->bid]['field_featured_content'][$i] = node_view($node, $node_view_mode);
+    if (isset($content['bean'][$bean->bid]['field_featured_content'])) {
+      $node_view_mode = $bean->content_display_mode;
+      foreach (element_children($content['bean'][$bean->bid]['field_featured_content']) as $i) {
+        $node = $content['bean'][$bean->bid]['field_featured_content'][$i]['#options']['entity'];
+        $content['bean'][$bean->bid]['field_featured_content'][$i] = node_view($node, $node_view_mode);
+      }
     }
     return $content;
   }
