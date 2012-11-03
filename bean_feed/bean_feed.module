@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Bean Feed module.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_feed_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_feed_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_feed');
+
+  $plugins['bean_feed'] = array(
+    'label' => t('Feed'),
+    'handler' => array(
+      'class' => 'BeanFeed',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'BeanFeed.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bean_feed_theme($existing, $type, $theme, $path) {
+  return array(
+    'bean_feed_item' => array(
+      'variables' => array('link' => NULL, 'title' => NULL, 'description' => NULL),
+      'template' => 'bean-feed-item',
+    ),
+  );
+}

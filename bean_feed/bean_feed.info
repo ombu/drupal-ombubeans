@@ -1,0 +1,8 @@
+name = Bean Feed
+description = Provides an RSS feed bean
+version = 7.x-0.1
+core = 7.x
+package = "OMBU Beans"
+php = "5.3"
+
+files[] = includes/BeanFeed.php
