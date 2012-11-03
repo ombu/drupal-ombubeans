@@ -66,9 +66,9 @@ class ombubeans_fpo extends ombubeans_base {
   }
 
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    //kpr($bean); exit;
     $content['bean'][$bean->bid][] = array(
-        '#markup' => sprintf('<a class="thumbnail" style="height:%dpx; line-height:%dpx;" href="#">%d</a>', $bean->height, $bean->height, $bean->width),
+        '#markup' => sprintf('<img style="width: 100%%; min-height:%spx" src="http://placehold.it/999x%d&text=%d%%20Columns"
+        class="img-polaroid">', $bean->height, $bean->height, $bean->width),
     );
     return $content;
   }
