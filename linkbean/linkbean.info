@@ -1,7 +1,7 @@
 name = Links Bean
 description = Provides a links field and bean
 core = 7.x
-package = Other
+package = OMBU Beans
 php = 5.3
 dependencies[] = bean
 dependencies[] = features

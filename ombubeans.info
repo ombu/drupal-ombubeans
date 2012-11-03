@@ -1,6 +1,6 @@
 name = "OMBU Beans"
 description = "Provides OMBU Beans"
 core = "7.x"
-package = "OMBU"
+package = "OMBU Beans"
 php = "5.3"
 files[] = "ombubeans.bean.inc"

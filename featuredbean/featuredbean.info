@@ -1,7 +1,7 @@
 name = Featured Content Bean
 description = Provides a bean that shows a selected list of content.
 core = 7.x
-package = Other
+package = OMBU Beans
 php = 5.3
 dependencies[] = bean
 dependencies[] = features
