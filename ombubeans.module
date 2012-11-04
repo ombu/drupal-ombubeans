@@ -81,9 +81,6 @@ function ombubeans_preprocess_block(&$variables) {
     $bid = current(element_children($bean));
     $bean = $bean[$bid]['#entity'];
 
-    if (isset($bean->width)) {
-      $variables['classes_array'][] = 'span' . $bean->width;
-    }
     if (isset($bean->color)) {
       $variables['classes_array'][] = $bean->color;
     }
