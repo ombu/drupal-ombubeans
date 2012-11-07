@@ -73,7 +73,7 @@ function linkbean_field_default_fields() {
         'title' => 'optional',
         'title_maxlength' => '128',
         'title_value' => '',
-        'url' => 0,
+        'url' => 'optional',
         'user_register_form' => FALSE,
         'validate_url' => 1,
       ),
