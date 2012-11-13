@@ -70,8 +70,8 @@ class ombubeans_fpo extends ombubeans_base {
     $width = tiles_get_width('bean', $bean->delta, $context->name);
 
     $content['bean'][$bean->bid][] = array(
-        '#markup' => sprintf('<img style="width: 100%%; min-height:%spx" src="http://placehold.it/999x%d&text=%d%%20Columns"
-        class="img-polaroid">', $bean->height, $bean->height, $width),
+      '#markup' => sprintf('<img style="width: 100%%; min-height:%spx" src="http://placehold.it/600x%d&text=FPO"
+      class="img-polaroid">', $bean->height, $bean->height, $width),
     );
     return $content;
   }
