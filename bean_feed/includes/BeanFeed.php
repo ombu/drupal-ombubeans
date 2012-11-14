@@ -5,7 +5,7 @@
  * Bean plugin object for bean feed.
  */
 
-class BeanFeed extends ombubeans_color {
+class BeanFeed extends BeanPlugin {
   /**
    * Implements BeanPlugin::values().
    */
