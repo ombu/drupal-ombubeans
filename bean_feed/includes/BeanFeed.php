@@ -48,7 +48,9 @@ class BeanFeed extends BeanPlugin {
    * Implements BeanPlugin::submit().
    */
   function submit(Bean $bean) {
-    cache_clear_all('bean_feed_' . $bean->bid, 'cache');
+    if (isset($bean->bid)) {
+      cache_clear_all('bean_feed_' . $bean->bid, 'cache');
+    }
   }
 
   /**
