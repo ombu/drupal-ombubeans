@@ -15,6 +15,7 @@ class BeanFeed extends BeanPlugin {
     $values += array(
       'feed_url' => '',
       'limit' => 10,
+      'title_only' => FALSE,
     );
     return $values;
   }
@@ -41,6 +42,12 @@ class BeanFeed extends BeanPlugin {
       '#default_value' => $bean->limit,
     );
 
+    $form['title_only'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Show only title'),
+      '#description' => t('Hide feed item body and only show title.'),
+      '#default_value' => $bean->title_only,
+    );
     return $form;
   }
 
@@ -49,7 +56,7 @@ class BeanFeed extends BeanPlugin {
    */
   function submit(Bean $bean) {
     if (isset($bean->bid)) {
-      cache_clear_all('bean_feed_' . $bean->bid, 'cache');
+      cache_clear_all(md5('bean_feed_' . $bean->bid . '_' . $bean->feed_url), 'cache');
     }
   }
 
@@ -78,7 +85,7 @@ class BeanFeed extends BeanPlugin {
           $items[] = array(
             'link' => $item->link(),
             'title' => $item->title(),
-            // 'description' => $item->description(),
+            'description' => $bean->title_only ? NULL : $item->description(),
           );
           if ($i++ == $bean->limit) {
             break;
