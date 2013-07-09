@@ -83,9 +83,11 @@ class BeanFeed extends BeanPlugin {
         $i = 0;
         foreach ($feed as $item) {
           $items[] = array(
+            'bean' => $bean,
             'link' => $item->link(),
             'title' => $item->title(),
             'description' => $bean->title_only ? NULL : $item->description(),
+            'date' => $item->pubDate(),
           );
           if ($i++ == $bean->limit) {
             break;
