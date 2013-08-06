@@ -92,6 +92,9 @@ class YouTubeBean extends BeanPlugin {
       $content['bean'][$bean->delta]['items'] = array(
         '#theme' => 'item_list',
         '#items' => $items,
+        '#attributes' => array(
+          'class' => array('videos'),
+        ),
       );
 
       // Add pager if there is more than one page. Google uses page tokens to
