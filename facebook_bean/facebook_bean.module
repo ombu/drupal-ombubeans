@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Facebook integration into beans.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function facebook_bean_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function facebook_bean_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'facebook_bean');
+
+  $plugins['facebook_bean'] = array(
+    'label' => t('Facebook Feed'),
+    'handler' => array(
+      'class' => 'FacebookBean',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'FacebookBean.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Include necessary markup for facebook.
+ */
+function facebook_bean_preprocess_html(&$variables) {
+  if (variable_get('facebook_code', FALSE)) {
+    $api_key = variable_get('facebook_api_key', '');
+
+    $body = <<<EOD
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=$api_key";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+EOD;
+    $variables['page']['page_top'][] = array(
+      '#markup' => $body,
+    );
+  }
+}

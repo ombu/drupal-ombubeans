@@ -57,6 +57,17 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
+  $plugins['ombubeans_facebook'] = array(
+    'label' => t('Facebook Block'),
+    'handler' => array(
+      'class' => 'ombubeans_facebook',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path,
+      'file' => 'ombubeans.bean.inc',
+    ),
+    'editable' => TRUE,
+  );
+
   $plugins['ombubeans_popular_content'] = array(
     'label' => t('Most Popular Content'),
     'handler' => array(
