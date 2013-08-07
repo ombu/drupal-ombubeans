@@ -125,7 +125,7 @@ class ombubeans_twitter extends ombubeans_base {
   public function values() {
     $values = parent::values();
     $values += array(
-      'handle' => 'ladygaga',
+      'widget' => '',
     );
     return $values;
   }
@@ -133,55 +133,22 @@ class ombubeans_twitter extends ombubeans_base {
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
 
-    $form['handle'] = array(
-      '#title' => t('Twitter Handle'),
-      '#type' => 'textfield',
+    $form['widget'] = array(
+      '#title' => t('Twitter widget'),
+      '#type' => 'textarea',
       '#required' => TRUE,
-      '#default_value' => $bean->handle,
-      '#description' => t('Enter the twitter handle for this block.'),
+      '#default_value' => $bean->widget,
+      '#description' => t('Enter the code for the custom twitter widget.  You can create a new one <a href="https://twitter.com/settings/widgets">here</a>.  For more help creating a custom widget, visit the <a href="https://dev.twitter.com/docs/embedded-timelines#customization">Twitter documentation</a>'),
     );
+
     return $form;
   }
 
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    $handle = $bean->handle;
-
-    $twitter_js = <<<EOD
-      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-      <script type="text/javascript">
-      new TWTR.Widget({
-        version: 2,
-        type: 'profile',
-        rpp: 10,
-        interval: 30000,
-        width: 'auto',
-        theme: {
-          shell: {
-            background: 'transparent',
-            color: '#333333'
-          },
-          tweets: {
-            background: 'transparent'
-          }
-        },
-        features: {
-          scrollbar: true,
-          loop: false,
-          live: false,
-          behavior: 'all'
-        }
-      }).render().setUser('$handle').start();
-      </script>
-EOD;
-
-    $content['twitter_feed'] = array(
-      '#markup' => $twitter_js,
-      '#attached' => array(
-        'js' => array(
-          'http://widgets.twimg.com/j/2/widget.js' => array('type' => 'external'),
-        ),
-      ),
+    $content['bean'][$bean->delta]['widget'] = array(
+      '#markup' => $bean->widget,
     );
+
     return $content;
   }
 }
