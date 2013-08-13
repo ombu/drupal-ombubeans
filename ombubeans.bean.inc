@@ -214,6 +214,11 @@ class ombubeans_twitter extends ombubeans_base {
       '#prefix' => '<div id="twitter-widget-wrapper-' . $bean->delta . '">',
       '#suffix' => '</div>',
       '#markup' => $bean->widgets[0]['widget'],
+      '#attached' => array(
+        'js' => array(
+          drupal_get_path('module', 'ombubeans') . '/js/ombubeans-twitter-bean.js',
+        ),
+      ),
     );
 
     return $content;

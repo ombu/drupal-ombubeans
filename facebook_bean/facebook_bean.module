@@ -100,9 +100,14 @@ function facebook_bean_select_form($form, $form_state, $bean) {
  * AJAX callback for feed select form.
  */
 function facebook_bean_select_callback($form, $form_state) {
-  $content = array();
+  $commands = array();
 
-  $content['like-box'] = FacebookBean::getLikeBox($form_state['values']['url'], $form['#bean']);
+  $commands[] = ajax_command_replace('#facebook-bean-wrapper-' . $form['#bean']->delta, drupal_render(FacebookBean::getLikeBox($form_state['values']['url'], $form['#bean'])));
 
-  return $content;
+  $commands[] = array('command' => 'facebook_bean_update');
+
+  return array(
+    '#type' => 'ajax',
+    '#commands' => $commands,
+  );
 }

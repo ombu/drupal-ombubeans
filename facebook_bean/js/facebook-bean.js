@@ -1,12 +1,7 @@
 (function ($) {
 
-  Drupal.behaviors.FacebookBean = {
-    attach: function(context, settings) {
-      // Trigger any new Facebook loading.
-      if ($('.facebook-bean-wrapper', context)) {
-        FB.XFBML.parse();
-      }
-    }
+  Drupal.ajax.prototype.commands.facebook_bean_update = function(ajax, response, status) {
+    FB.XFBML.parse();
   };
 
 })(jQuery);
