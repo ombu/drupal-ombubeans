@@ -62,7 +62,7 @@ class BeanFeed extends BeanPlugin {
       );
     }
 
-    $form['feed_urls']['add'] = array(
+    $form['add'] = array(
       '#prefix' => '<div style="clear: both">',
       '#suffix' => '</div>',
       '#type' => 'button',
@@ -116,7 +116,7 @@ class BeanFeed extends BeanPlugin {
 
     if (!empty($items)) {
 
-      $content['bean'][$bean->bid]['form'] = drupal_get_form('bean_feed_select_form', $bean);
+      $content['bean'][$bean->delta]['form'] = drupal_get_form('bean_feed_select_form', $bean);
 
       $rendered_items = array();
       foreach ($items as $item) {
@@ -125,11 +125,11 @@ class BeanFeed extends BeanPlugin {
 
       // @todo: make this a dedicated theme function, instead of relying on
       // theme_item_list().
-      $content['bean'][$bean->bid]['items'] = array(
+      $content['bean'][$bean->delta]['items'] = array(
         '#theme' => 'item_list',
         '#items' => $rendered_items,
         '#attributes' => array(
-          'id' => 'bean-feed-wrapper-' . $bean->bid,
+          'id' => 'bean-feed-wrapper-' . $bean->delta,
         ),
       );
     }

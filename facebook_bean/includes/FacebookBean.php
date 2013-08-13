@@ -6,10 +6,13 @@
  */
 
 class FacebookBean extends BeanPlugin {
+  /**
+   * Implements parent::values().
+   */
   public function values() {
     $values = parent::values();
     $values += array(
-      'url' => '',
+      'urls' => array(),
       'width' => '300',
       'height' => '',
       'header' => TRUE,
@@ -20,15 +23,60 @@ class FacebookBean extends BeanPlugin {
     return $values;
   }
 
+  /**
+   * Implements parent::form().
+   */
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
 
-    $form['url'] = array(
-      '#title' => t('Page URL'),
-      '#type' => 'textfield',
-      '#required' => TRUE,
-      '#default_value' => $bean->url,
-      '#description' => t('The absolute URL of the Facebook Page'),
+    if (!isset($form_state['url_count'])) {
+      $form_state['url_count'] = count($bean->urls) + 1;
+    }
+
+    if (isset($form_state['triggering_element']) && $form_state['triggering_element']['#name'] == 'add') {
+      $form_state['url_count']++;
+    }
+
+    $form['urls'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Facebook Pages',
+      '#description' => t('The title(s) and URL(s) to Facebook pages. If multiple URLs are added, then a select box will be presented to the site visitor allowing them to change which page is displayed.'),
+      '#prefix' => '<div id="urls-wrapper">',
+      '#suffix' => '</div>',
+      '#tree' => TRUE,
+    );
+
+    for ($i = 0; $i < $form_state['url_count']; $i++) {
+      $form['urls'][$i]['title'] = array(
+        '#prefix' => '<div style="float: left; clear: both; padding-right: 10px;">',
+        '#suffix' => '</div>',
+        '#type' => 'textfield',
+        '#title' => t('Page !count - Title', array('!count' => ($i + 1))),
+        '#required' => $i == 0 ? TRUE : FALSE,
+        '#default_value' => isset($bean->urls[$i]['title']) ? $bean->urls[$i]['title'] : '',
+      );
+      $form['urls'][$i]['url'] = array(
+        '#prefix' => '<div style="float: left;">',
+        '#suffix' => '</div>',
+        '#type' => 'textfield',
+        '#title' => t('URL'),
+        '#description' => t('The absolute URL to the facebook page'),
+        '#required' => $i == 0 ? TRUE : FALSE,
+        '#default_value' => isset($bean->urls[$i]['url']) ? $bean->urls[$i]['url'] : '',
+      );
+    }
+
+    $form['add'] = array(
+      '#prefix' => '<div style="clear: both">',
+      '#suffix' => '</div>',
+      '#type' => 'button',
+      '#name' => 'add',
+      '#value' => t('Add another page'),
+      '#ajax' => array(
+        'callback' => 'facebook_bean_ajax_callback',
+        'wrapper' => 'urls-wrapper',
+      ),
+      '#limit_validation_errors' => array(),
     );
 
     $form['width'] = array(
@@ -76,14 +124,42 @@ class FacebookBean extends BeanPlugin {
     return $form;
   }
 
+  /**
+   * Implements parent::validate().
+   */
+  public function validate($values, &$form_state) {
+    // Unset empty url values.
+    foreach ($form_state['values']['urls'] as $key => $value) {
+      if (empty($value['url'])) {
+        unset($form_state['values']['urls'][$key]);
+      }
+    }
+  }
+
+  /**
+   * Implements parent::view().
+   */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     // Trigger inclusion of FB code.
     global $conf;
     $conf['facebook_code'] = TRUE;
 
-    $content['bean'][$bean->delta]['like-box'] = array(
+    $content['bean'][$bean->delta]['form'] = drupal_get_form('facebook_bean_select_form', $bean);
+
+    $content['bean'][$bean->delta]['like-box'] = FacebookBean::getLikeBox($bean->urls[0]['url'], $bean);
+
+    return $content;
+  }
+
+  /**
+   * Generate build array for facebook like box.
+   */
+  static public function getLikeBox($url, $bean) {
+    return array(
+      '#prefix' => '<div class="facebook-bean-wrapper" id="facebook-bean-wrapper-' . $bean->delta . '">',
+      '#suffix' => '</div>',
       '#markup' => t('<div class="fb-like-box" data-href="!url" data-width="!width" !height data-show-faces="!faces" data-header="!header" data-stream="!stream" data-show-border="!border"></div>', array(
-        '!url' => $bean->url,
+        '!url' => $url,
         '!width' => $bean->width,
         '!height' => $bean->height ? 'data-height="' . $bean->height . '"' : '',
         '!faces' => $bean->faces ? 'true' : 'false',
@@ -92,7 +168,5 @@ class FacebookBean extends BeanPlugin {
         '!border' => $bean->border ? 'true' : 'false',
       )),
     );
-
-    return $content;
   }
 }

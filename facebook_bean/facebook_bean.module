@@ -57,5 +57,52 @@ EOD;
     $variables['page']['page_top'][] = array(
       '#markup' => $body,
     );
+
+    drupal_add_js(drupal_get_path('module', 'facebook_bean') . '/js/facebook-bean.js');
   }
+}
+
+/**
+ * AJAX callback for adding multiple pages.
+ */
+function facebook_bean_ajax_callback($form, $form_state) {
+  // If bean is being loaded via tiles.module, then need to return form from
+  // bean_form key.
+  return isset($form['urls']) ? $form['url'] : $form['bean_form']['urls'];
+}
+
+/**
+ * Select form for selecting multiple feeds.
+ */
+function facebook_bean_select_form($form, $form_state, $bean) {
+  if (count($bean->urls) > 1) {
+    $form['#bean'] = $bean;
+
+    $options = array();
+    foreach ($bean->urls as $url) {
+      $options[$url['url']] = $url['title'];
+    }
+
+    $form['url'] = array(
+      '#type' => 'select',
+      '#options' => $options,
+      '#ajax' => array(
+        'callback' => 'facebook_bean_select_callback',
+        'wrapper' => 'facebook-bean-wrapper-' . $bean->delta,
+      ),
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * AJAX callback for feed select form.
+ */
+function facebook_bean_select_callback($form, $form_state) {
+  $content = array();
+
+  $content['like-box'] = FacebookBean::getLikeBox($form_state['values']['url'], $form['#bean']);
+
+  return $content;
 }

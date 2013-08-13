@@ -51,7 +51,9 @@ function bean_feed_theme($existing, $type, $theme, $path) {
  * AJAX callback for bean form.
  */
 function bean_feed_ajax_callback($form, $form_state) {
-  return $form['feeds'];
+  // If bean is being loaded via tiles.module, then need to return form from
+  // bean_form key.
+  return isset($form['feeds']) ? $form['feeds'] : $form['bean_form']['feeds'];
 }
 
 /**
@@ -71,7 +73,7 @@ function bean_feed_select_form($form, $form_state, $bean) {
       '#options' => $options,
       '#ajax' => array(
         'callback' => 'bean_feed_select_callback',
-        'wrapper' => 'bean-feed-wrapper-' . $bean->bid,
+        'wrapper' => 'bean-feed-wrapper-' . $bean->delta,
       ),
     );
   }
