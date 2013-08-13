@@ -94,6 +94,18 @@ class BeanFeed extends BeanPlugin {
   }
 
   /**
+   * Implements parent::validate().
+   */
+  public function validate($values, &$form_state) {
+    // Unset empty url values.
+    foreach ($form_state['values']['feeds'] as $key => $value) {
+      if (empty($value['url'])) {
+        unset($form_state['values']['feeds'][$key]);
+      }
+    }
+  }
+
+  /**
    * Implements BeanPlugin::submit().
    */
   function submit(Bean $bean) {
