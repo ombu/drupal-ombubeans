@@ -36,6 +36,23 @@ function youtube_bean_bean_types() {
 }
 
 /**
+ * Implements hook_siteconfig().
+ */
+function youtube_bean_siteconfig($op, $form) {
+  if ($op == 'form') {
+    $api_key = variable_get('youtube_bean_api_key', FALSE);
+    $form['services']['youtube_bean_api_key'] = array(
+      '#title' => t('YouTube API Key'),
+      '#type' => 'textfield',
+      '#default_value' => $api_key,
+      '#description' => 'API key for YouTube services',
+    );
+
+    return $form;
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function youtube_bean_theme($existing, $type, $theme, $path) {
