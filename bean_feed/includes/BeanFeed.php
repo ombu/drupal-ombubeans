@@ -168,7 +168,7 @@ class BeanFeed extends BeanPlugin {
 
     // Cache the expensive Zend_Feed operations.
     $cache_id = md5('bean_feed_' . $bean->bid . '_' . $url);
-    if (FALSE && $cache = cache_get($cache_id)) {
+    if ($cache = cache_get($cache_id)) {
       $items = $cache->data;
     }
     else {

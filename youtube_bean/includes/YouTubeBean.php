@@ -65,10 +65,8 @@ class YouTubeBean extends BeanPlugin {
       $client = new Google_Client();
       $client->setDeveloperKey($api_key);
 
-      $youtube = new Google_YoutubeService($client);
-
       $filters = array(
-        'playlistId' => 'PLE73A9F5749971C16',
+        'playlistId' => $bean->playlist,
         'maxResults' => $bean->limit,
       );
 
@@ -77,16 +75,26 @@ class YouTubeBean extends BeanPlugin {
         $filters['pageToken'] = $_GET['youtube-' . $bean->bid];
       }
 
-      $result = $youtube->playlistItems->listPlaylistItems('snippet,contentDetails', $filters);
+      $cache_id = 'youtube_cache_' . md5(serialize($filters + array('delta' => $bean->delta)));
 
-      $items = array();
-      foreach ($result['items'] as $item) {
-        // Retrieve additional content details, since only video ID is retrieved
-        // in first request.
-        $video_result = $youtube->videos->listVideos('contentDetails', array('id' => $item['snippet']['resourceId']['videoId']));
-        $item['contentDetails'] = $video_result['items'][0]['contentDetails'];
+      if ($cache = cache_get($cache_id)) {
+        $items = $cache->data;
+      }
+      else {
 
-        $items[] = theme('youtube_bean_item', array('item' => $item));
+        $youtube = new Google_YoutubeService($client);
+        $result = $youtube->playlistItems->listPlaylistItems('snippet,contentDetails', $filters);
+        $items = array();
+        foreach ($result['items'] as $item) {
+          // Retrieve additional content details, since only video ID is retrieved
+          // in first request.
+          $video_result = $youtube->videos->listVideos('contentDetails', array('id' => $item['snippet']['resourceId']['videoId']));
+          $item['contentDetails'] = $video_result['items'][0]['contentDetails'];
+
+          $items[] = theme('youtube_bean_item', array('item' => $item));
+        }
+
+        cache_set($cache_id, $items, 'cache', 86400);
       }
 
       $content['bean'][$bean->delta]['items'] = array(
