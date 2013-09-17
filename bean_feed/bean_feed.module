@@ -98,7 +98,7 @@ function bean_feed_select_callback($form, $form_state) {
       '#theme' => 'item_list',
       '#items' => $rendered_items,
       '#attributes' => array(
-        'id' => 'bean-feed-wrapper-' . $form['#bean']->bid,
+        'id' => 'bean-feed-wrapper-' . $form['#bean']->delta,
       ),
     );
   }
