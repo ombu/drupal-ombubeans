@@ -41,8 +41,67 @@ function bean_feed_bean_types() {
 function bean_feed_theme($existing, $type, $theme, $path) {
   return array(
     'bean_feed_item' => array(
-      'variables' => array('link' => NULL, 'title' => NULL, 'description' => NULL),
+      'variables' => array('bean' => NULL, 'link' => NULL, 'title' => NULL, 'description' => NULL, 'date' => NULL),
       'template' => 'bean-feed-item',
     ),
   );
+}
+
+/**
+ * AJAX callback for bean form.
+ */
+function bean_feed_ajax_callback($form, $form_state) {
+  // If bean is being loaded via tiles.module, then need to return form from
+  // bean_form key.
+  return isset($form['feeds']) ? $form['feeds'] : $form['bean_form']['feeds'];
+}
+
+/**
+ * Select form for selecting multiple feeds.
+ */
+function bean_feed_select_form($form, $form_state, $bean) {
+  if (count($bean->feeds) > 1) {
+    $form['#bean'] = $bean;
+
+    $options = array();
+    foreach ($bean->feeds as $feed) {
+      $options[$feed['url']] = $feed['title'];
+    }
+
+    $form['feeds'] = array(
+      '#type' => 'select',
+      '#options' => $options,
+      '#ajax' => array(
+        'callback' => 'bean_feed_select_callback',
+        'wrapper' => 'bean-feed-wrapper-' . $bean->delta,
+      ),
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * AJAX callback for feed select form.
+ */
+function bean_feed_select_callback($form, $form_state) {
+  $content = array();
+
+  $items = BeanFeed::getFeedItems($form['#bean'], $form_state['values']['feeds']);
+  if ($items) {
+    $rendered_items = array();
+    foreach ($items as $item) {
+      $rendered_items[] = theme('bean_feed_item', $item);
+    }
+
+    $content['items'] = array(
+      '#theme' => 'item_list',
+      '#items' => $rendered_items,
+      '#attributes' => array(
+        'id' => 'bean-feed-wrapper-' . $form['#bean']->delta,
+      ),
+    );
+  }
+
+  return $content;
 }

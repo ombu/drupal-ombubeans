@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Shows YouTube videos in a bean.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function youtube_bean_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function youtube_bean_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'youtube_bean');
+
+  $plugins['youtube_bean'] = array(
+    'label' => t('YouTube Feed'),
+    'handler' => array(
+      'class' => 'YouTubeBean',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'YouTubeBean.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_siteconfig().
+ */
+function youtube_bean_siteconfig($op, $form) {
+  if ($op == 'form') {
+    $api_key = variable_get('youtube_bean_api_key', FALSE);
+    $form['services']['youtube_bean_api_key'] = array(
+      '#title' => t('YouTube API Key'),
+      '#type' => 'textfield',
+      '#default_value' => $api_key,
+      '#description' => 'API key for YouTube services',
+    );
+
+    return $form;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function youtube_bean_theme($existing, $type, $theme, $path) {
+  return array(
+    'youtube_bean_item' => array(
+      'variables' => array('item'),
+    ),
+  );
+}
+
+/**
+ * Theme an individual YouTube item in a bean. 
+ */
+function theme_youtube_bean_item($variables) {
+  $item = $variables['item'];
+
+  $output = '<a href="' . 'http://www.youtube.com/watch?v=' . $item['snippet']['resourceId']['videoId'] . '">';
+
+  $output .= '<span class="play"></span>';
+
+  $output .= '<img src="' . $item['snippet']['thumbnails']['medium']['url'] . '">';
+
+  $output .= '</a>';
+
+  return $output;
+}

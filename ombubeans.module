@@ -137,3 +137,57 @@ function ombubeans_bean_test_page() {
   return $content;
 }
 
+/**
+ * AJAX callback for adding multiple widgets.
+ */
+function ombubeans_twitter_bean_ajax_callback($form, $form_state) {
+  // If bean is being loaded via tiles.module, then need to return form from
+  // bean_form key.
+  return isset($form['widgets']) ? $form['widgets'] : $form['bean_form']['widgets'];
+}
+
+/**
+ * Select form for selecting multiple feeds.
+ */
+function ombubeans_twitter_bean_select_form($form, $form_state, $bean) {
+  if (count($bean->widgets) > 1) {
+    $form['#bean'] = $bean;
+
+    $options = array();
+    foreach ($bean->widgets as $key => $widget) {
+      $options[$key] = $widget['title'];
+    }
+
+    $form['widget'] = array(
+      '#type' => 'select',
+      '#options' => $options,
+      '#ajax' => array(
+        'callback' => 'ombubeans_twitter_bean_select_callback',
+        'wrapper' => 'twitter-widget-wrapper-' . $bean->delta,
+      ),
+    );
+  }
+
+  return $form;
+}
+
+/**
+ * AJAX callback for widget select form.
+ */
+function ombubeans_twitter_bean_select_callback($form, $form_state) {
+  $commands = array();
+
+  $widget =
+    '<div id="twitter-widget-wrapper-' . $form['#bean']->delta . '">' .
+    $form['#bean']->widgets[$form_state['values']['widget']]['widget'] .
+    '</div>';
+
+  $commands[] = ajax_command_replace('#twitter-widget-wrapper-' . $form['#bean']->delta, $widget);
+
+  $commands[] = array('command' => 'twitter_bean_update');
+
+  return array(
+    '#type' => 'ajax',
+    '#commands' => $commands,
+  );
+}
