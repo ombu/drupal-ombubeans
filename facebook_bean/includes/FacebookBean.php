@@ -29,6 +29,13 @@ class FacebookBean extends BeanPlugin {
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
 
+    if (!variable_get('facebook_api_key', FALSE)) {
+      drupal_set_message(t('You must <a href="!url">set a valid Facebook API key (in the services group)</a> before the Facebook block will function.', array(
+        '!url' => '/admin/siteconfig',
+      )));
+      return $form;
+    }
+
     if (!isset($form_state['url_count'])) {
       $form_state['url_count'] = count($bean->urls) + 1;
     }
