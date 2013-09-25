@@ -6,4 +6,4 @@ php = 5.3
 dependencies[] = bean
 dependencies[] = features
 dependencies[] = field
-dependencies[] = node_reference
+dependencies[] = entityreference
