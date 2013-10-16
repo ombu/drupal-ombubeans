@@ -98,7 +98,7 @@ class YouTubeBean extends BeanPlugin {
           cache_set($cache_id, $items, 'cache', 86400);
         }
         catch (Google_ServiceException $e) {
-          watchdog('youtube_bean', 'Error parsing youtube content: ' . $e->getMessage(), 'error');
+          watchdog('youtube_bean', 'Error parsing youtube content: ' . $e->getMessage(), array(), WATCHDOG_CRITICAL);
           return $content;
         }
       }
