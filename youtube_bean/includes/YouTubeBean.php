@@ -82,19 +82,25 @@ class YouTubeBean extends BeanPlugin {
       }
       else {
 
-        $youtube = new Google_YoutubeService($client);
-        $result = $youtube->playlistItems->listPlaylistItems('snippet,contentDetails', $filters);
-        $items = array();
-        foreach ($result['items'] as $item) {
-          // Retrieve additional content details, since only video ID is retrieved
-          // in first request.
-          $video_result = $youtube->videos->listVideos('contentDetails', array('id' => $item['snippet']['resourceId']['videoId']));
-          $item['contentDetails'] = $video_result['items'][0]['contentDetails'];
+        try {
+          $youtube = new Google_YoutubeService($client);
+          $result = $youtube->playlistItems->listPlaylistItems('snippet,contentDetails', $filters);
+          $items = array();
+          foreach ($result['items'] as $item) {
+            // Retrieve additional content details, since only video ID is retrieved
+            // in first request.
+            $video_result = $youtube->videos->listVideos('contentDetails', array('id' => $item['snippet']['resourceId']['videoId']));
+            $item['contentDetails'] = $video_result['items'][0]['contentDetails'];
 
-          $items[] = theme('youtube_bean_item', array('item' => $item));
+            $items[] = theme('youtube_bean_item', array('item' => $item));
+          }
+
+          cache_set($cache_id, $items, 'cache', 86400);
         }
-
-        cache_set($cache_id, $items, 'cache', 86400);
+        catch (Google_ServiceException $e) {
+          watchdog('youtube_bean', 'Error parsing youtube content: ' . $e->getMessage(), 'error');
+          return $content;
+        }
       }
 
       $content['bean'][$bean->delta]['items'] = array(
