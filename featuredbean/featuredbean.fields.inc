@@ -10,48 +10,60 @@ function featuredbean_get_default_fields() {
   // Exported field: 'bean-featuredbean-field_featured_content'.
   $fields['bean-featuredbean-field_featured_content'] = array(
     'field_config' => array(
-      'active' => '1',
-      'cardinality' => '-1',
-      'deleted' => '0',
+      'active' => 1,
+      'cardinality' => -1,
+      'deleted' => 0,
       'entity_types' => array(),
       'field_name' => 'field_featured_content',
       'foreign keys' => array(
-        'nid' => array(
+        'node' => array(
           'columns' => array(
-            'nid' => 'nid',
+            'target_id' => 'nid',
           ),
           'table' => 'node',
         ),
       ),
       'indexes' => array(
-        'nid' => array(
-          0 => 'nid',
+        'target_id' => array(
+          0 => 'target_id',
         ),
       ),
-      'locked' => '0',
-      'module' => 'node_reference',
+      'locked' => 0,
+      'module' => 'entityreference',
       'settings' => array(
-        'referenceable_types' => array(),
-        'view' => array(
-          'args' => array(),
-          'display_name' => '',
-          'view_name' => '',
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'direction' => 'ASC',
+            'property' => 'title',
+            'type' => 'property',
+          ),
+          'target_bundles' => array(),
         ),
+        'target_type' => 'node',
       ),
-      'translatable' => '0',
-      'type' => 'node_reference',
+      'translatable' => 0,
+      'type' => 'entityreference',
+
     ),
     'field_instance' => array(
       'bundle' => 'featuredbean',
       'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
+      'deleted' => 0,
+      'description' => 'Select one or more pieces of content to feature.  Start typing the title of the content and it will be listed in the autocomplete field.',
       'display' => array(
         'default' => array(
-          'label' => 'hiden',
-          'module' => 'node_reference',
-          'settings' => array(),
-          'type' => 'node_reference_default',
+          'label' => 'hidden',
+          'module' => 'entityreference',
+          'settings' => array(
+            'link' => 1,
+          ),
+          'type' => 'entityreference_label',
           'weight' => 0,
         ),
       ),
@@ -64,14 +76,14 @@ function featuredbean_get_default_fields() {
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'node_reference',
+        'module' => 'entityreference',
         'settings' => array(
-          'autocomplete_match' => 'contains',
-          'autocomplete_path' => 'node_reference/autocomplete',
-          'size' => '60',
+          'match_operator' => 'CONTAINS',
+          'path' => '',
+          'size' => 60,
         ),
-        'type' => 'node_reference_autocomplete',
-        'weight' => '-4',
+        'type' => 'entityreference_autocomplete',
+        'weight' => 2,
       ),
     ),
   );
