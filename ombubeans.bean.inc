@@ -108,7 +108,7 @@ class ombubeans_fpohero extends ombubeans_base {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     $content['bean'][$bean->bid][] = array(
         '#markup' => sprintf(<<<EOF
-<div class="hero-unit">
+<div class="jumbotron">
   %s
 </div>
 EOF
