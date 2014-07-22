@@ -30,7 +30,8 @@ function drush_ombubeans_bean_export($delta) {
     $output .= '$bean->' . $property . ' = \'' . $bean->$property . '\'' . ";\n";
   }
 
-  $output .= '$bean->setValues(' . var_export($bean->data, TRUE) . ')' . ";\n";
+  require 'includes/utility.inc';
+  $output .= '$bean->setValues(' . drupal_var_export($bean->data) . ')' . ";\n";
 
   // Export fields.
   $fields = field_info_instances('bean', $bean->type);
@@ -39,7 +40,7 @@ function drush_ombubeans_bean_export($delta) {
       // @todo: handle images and files.
       // @todo: handle field collections.
       default:
-        $output .= '$bean->' . $key . ' = ' . var_export($bean->$key, TRUE) . ";\n";
+        $output .= '$bean->' . $key . ' = ' . drupal_var_export($bean->$key) . ";\n";
         break;
     }
   }
