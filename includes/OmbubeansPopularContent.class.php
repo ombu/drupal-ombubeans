@@ -19,6 +19,9 @@ class OmbubeansPopularContent extends BeanPlugin {
     $values += array(
       'bundle' => 'page',
       'num' => 5,
+      'time_range' => array(
+        'enable' => 0,
+      ),
     );
     return $values;
   }
@@ -53,7 +56,55 @@ class OmbubeansPopularContent extends BeanPlugin {
       '#default_value' => $bean->num,
     );
 
+    $form['time_range'] = array(
+      '#tree' => TRUE,
+    );
+
+    $form['time_range']['enable'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Limit results to time range'),
+      '#description' => t('Check to limit results to a relative time range'),
+      '#default_value' => isset($bean->time_range['enable']) ? $bean->time_range['enable'] : 0,
+    );
+    $form['time_range']['range'] = array(
+      '#type' => 'textfield',
+      '#title' => 'Range',
+      '#description' => t('Combined with granularity, restricts popular posts to date range.'),
+      '#default_value' => isset($bean->time_range['range']) ? $bean->time_range['range'] : NULL,
+      '#states' => array(
+        'visible' => array(
+          'input[name="time_range[enable]"]' => array('checked' => TRUE),
+        ),
+      ),
+      '#size' => 2,
+    );
+    $form['time_range']['granularity'] = array(
+      '#type' => 'select',
+      '#title' => 'Granularity',
+      '#options' => array(
+        'day' => t('Day(s)'),
+        'week' => t('Week(s)'),
+        'month' => t('Month(s)'),
+        'year' => t('Year(s)'),
+      ),
+      '#default_value' => isset($bean->time_granularity['granularity']) ? $bean->time_granularity['granularity'] : NULL,
+      '#states' => array(
+        'visible' => array(
+          'input[name="time_range[enable]"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
     return $form;
+  }
+
+  /**
+   * Implements parent::validate().
+   */
+  public function validate($values, &$form_state) {
+    if (!empty($values['time_range']['range']) && !is_numeric($values['time_range']['range'])) {
+      form_set_error('time_range][range]', 'Only numeric values are allowed for time range');
+    }
   }
 
   /**
@@ -68,6 +119,16 @@ class OmbubeansPopularContent extends BeanPlugin {
     $query->condition('type', $bean->bundle, '=');
     $query->orderBy('totalcount', 'DESC');
     $query->range(0, $bean->num);
+
+    // Apply time range to restrict posts to a relative date range.
+    if ($bean->time_range['enable']) {
+      $start_time = strtotime(sprintf('%d %s ago',
+        $bean->time_range['range'],
+        $bean->time_range['granularity']
+      ));
+
+      $query->condition('created', $start_time, '>');
+    }
 
     $content['most_popular'] = array(
       '#theme' => 'item_list',
