@@ -113,7 +113,7 @@ class OmbubeansPopularContent extends BeanPlugin {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     $query = db_select('node', 'n');
     $query->join('node_counter', 'nc', 'n.nid = nc.nid');
-    $query->fields('n', array('nid', 'title', 'status', 'type'));
+    $query->fields('n', array('nid'));
     $query->fields('nc', array('totalcount'));
     $query->condition('status', 0, '>');
     $query->condition('type', $bean->bundle, '=');
@@ -130,16 +130,16 @@ class OmbubeansPopularContent extends BeanPlugin {
       $query->condition('created', $start_time, '>');
     }
 
-    $content['most_popular'] = array(
-      '#theme' => 'item_list',
-      '#items' => array(),
-    );
+    $nids = $query->execute()->fetchCol();
 
-    foreach ($query->execute() as $row) {
-      $content['most_popular']['#items'][] = array(
-        'data' => l($row->title, 'node/' . $row->nid),
-        '#row' => (array) $row,
-      );
+    if ($nids) {
+      $nodes = node_load_multiple($nids);
+      $content['bean'][$bean->delta]['#nodes'] = $nodes;
+
+      // Allow bean styles to alter build.
+      if (module_exists('bean_style')) {
+        bean_style_view_alter($content, $bean);
+      }
     }
 
     return $content;
