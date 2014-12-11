@@ -165,9 +165,7 @@ function ombubeans_twitter_bean_select_form($form, $form_state, $bean) {
         'callback' => 'ombubeans_twitter_bean_select_callback',
         'wrapper' => 'twitter-widget-wrapper-' . $bean->delta,
       ),
-      '#attributes' => array(
-        'style' => 'padding-bottom: 20px',
-      ),
+      '#suffix' => '<br />',
     );
   }
 
