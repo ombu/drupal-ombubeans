@@ -1,9 +1,8 @@
 <?php
 /**
  * @file
+ * Basic beans to share across sites.
  */
-
-// include_once('ombubeans.features.inc');
 
 /**
  * Implements hook_bean_types_api_info().
@@ -26,10 +25,10 @@ function ombubeans_bean_types() {
     $plugins['ombubeans_fpo'] = array(
       'label' => t('FPO Block'),
       'handler' => array(
-        'class' => 'ombubeans_fpo',
+        'class' => 'OmbubeansFPO',
         'parent' => 'BeanPlugin',
-        'path' => $plugin_path,
-        'file' => 'ombubeans.bean.inc',
+        'path' => $plugin_path . '/includes',
+        'file' => 'OmbubeansFPO.php',
       ),
       'editable' => TRUE,
     );
@@ -37,10 +36,10 @@ function ombubeans_bean_types() {
     $plugins['ombubeans_fpohero'] = array(
       'label' => t('FPO Hero Block'),
       'handler' => array(
-        'class' => 'ombubeans_fpohero',
+        'class' => 'OmbubeansFPOHero',
         'parent' => 'BeanPlugin',
-        'path' => $plugin_path,
-        'file' => 'ombubeans.bean.inc',
+        'path' => $plugin_path . '/includes',
+        'file' => 'OmbubeansFPOHero.php',
       ),
       'editable' => TRUE,
     );
@@ -49,10 +48,10 @@ function ombubeans_bean_types() {
   $plugins['ombubeans_twitter'] = array(
     'label' => t('Twitter Block'),
     'handler' => array(
-      'class' => 'ombubeans_twitter',
+      'class' => 'OmbubeansTwitter',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path,
-      'file' => 'ombubeans.bean.inc',
+      'path' => $plugin_path . '/includes',
+      'file' => 'OmbubeansTwitter.php',
     ),
     'editable' => TRUE,
   );
@@ -63,7 +62,18 @@ function ombubeans_bean_types() {
       'class' => 'OmbubeansPopularContent',
       'parent' => 'BeanPlugin',
       'path' => $plugin_path . '/includes',
-      'file' => 'OmbubeansPopularContent.class.php',
+      'file' => 'OmbubeansPopularContent.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  $plugins['ombubeans_iframe'] = array(
+    'label' => t('iFrame'),
+    'handler' => array(
+      'class' => 'OmbubeansIFrame',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'OmbubeansIFrame.php',
     ),
     'editable' => TRUE,
   );

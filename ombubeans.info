@@ -4,4 +4,9 @@ version = 7.x-0.3.1
 core = "7.x"
 package = "OMBU Beans"
 php = "5.3"
-files[] = "ombubeans.bean.inc"
+
+files[] = includes/OmbubeansFPO.php
+files[] = includes/OmbubeansFPOHero.php
+files[] = includes/OmbubeansIFrame.php
+files[] = includes/OmbubeansPopularContent.php
+files[] = includes/OmbubeansTwitter.php

@@ -4,15 +4,10 @@
  * Provides the OmbubeansPopularContent class.
  */
 
-/**
- * Social Media Links bean.
- *
- * Placeholder class.  The field is applied to the entity via features.
- */
 class OmbubeansPopularContent extends BeanPlugin {
 
   /**
-   * Implements the value() method.
+   * Implements parent::values().
    */
   public function values() {
     $values = parent::values();
@@ -27,7 +22,7 @@ class OmbubeansPopularContent extends BeanPlugin {
   }
 
   /**
-   * Implements the form() method.
+   * Implements parent::form().
    */
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
@@ -108,7 +103,7 @@ class OmbubeansPopularContent extends BeanPlugin {
   }
 
   /**
-   * Implements the view() method.
+   * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     $query = db_select('node', 'n');
