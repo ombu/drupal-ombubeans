@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Menu block bean.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function menu_block_bean_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function menu_block_bean_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'menu_block_bean');
+
+  $plugins['menu_block_bean'] = array(
+    'label' => t('Menu block'),
+    'handler' => array(
+      'class' => 'MenuBlockBean',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'MenuBlockBean.php',
+    ),
+  );
+
+  return $plugins;
+}
