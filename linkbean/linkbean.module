@@ -39,3 +39,19 @@ function linkbean_bean_types() {
 
   return $plugins;
 }
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function linkbean_bean_style_info() {
+  return array(
+    'linkbean_style'  => array(
+      'label' => 'Default',
+      'class' => 'LinkBeanStyle',
+      'bean_types' => array(
+        'linkbean',
+      ),
+    ),
+  );
+}
+
