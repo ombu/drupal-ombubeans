@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Media Bean.
+ *
+ * A basic bean that provides a simple interface for embedding media content in
+ * a bean.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function media_bean_menu() {
+  $items = array();
+
+  $items['media-bean-options'] = array(
+    'page callback' => 'media_bean_ajax_options',
+    'access arguments' => array('create an media_bean bean'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function media_bean_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function media_bean_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'media_bean');
+
+  $plugins['media_bean'] = array(
+    'label' => t('Media Block'),
+    'handler' => array(
+      'class' => 'MediaBean',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/includes',
+      'file' => 'MediaBean.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * AJAX callback for dynamically updating file view options.
+ */
+function media_bean_ajax_options() {
+  if (!is_numeric($_GET['fid'])) {
+    return MENU_NOT_FOUND;
+  }
+
+  $file = file_load($_GET['fid']);
+
+  $modes = media_get_wysiwyg_allowed_view_modes($file);
+  foreach ($modes as $mode => $info) {
+    $view_modes[] = array(
+      'value' => $mode,
+      'name' => $info['label']
+    );
+  }
+
+  print drupal_json_encode($view_modes);
+  drupal_exit();
+}
