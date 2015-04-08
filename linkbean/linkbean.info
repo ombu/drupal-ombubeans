@@ -9,3 +9,5 @@ dependencies[] = field
 dependencies[] = link
 features[features_api][] = api:1
 features[field][] = bean-linkbean-field_linkbean_links
+files[] = includes/LinkBean.php
+files[] = includes/LinkBeanStyle.php

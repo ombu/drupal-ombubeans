@@ -39,3 +39,28 @@ function linkbean_bean_types() {
 
   return $plugins;
 }
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function linkbean_bean_style_info() {
+  return array(
+    'linkbean_style'  => array(
+      'label' => 'Default',
+      'class' => 'LinkBeanStyle',
+      'bean_types' => array(
+        'linkbean',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options().
+ */
+function linkbean_bean_style_options(&$options, $context) {
+  // Remove default style for linkbean styles.
+  if ($context['bean']->type == 'linkbean') {
+    unset($options['']);
+  }
+}
