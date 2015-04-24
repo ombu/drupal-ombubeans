@@ -30,6 +30,8 @@ class MenuBlockBean extends BeanPlugin {
   public function values() {
     $values = parent::values() + array(
       'parent_mlid' => $this->menuName . ':0',
+      // @todo: allow this to be configurable.
+      'depth' => 1,
     );
 
     return $values;
@@ -67,7 +69,11 @@ class MenuBlockBean extends BeanPlugin {
       $this->pruneTree($tree, $parent_mlid);
     }
 
-    return menu_tree_output($tree);
+    $this->pruneDepth($tree, $bean->depth);
+
+    $content['bean'][$bean->delta]['menu'] = menu_tree_output($tree);
+
+    return $content;
   }
 
   /**
@@ -89,4 +95,19 @@ class MenuBlockBean extends BeanPlugin {
       }
     }
   }
+
+  /**
+   * Prune children to a specific depth.
+   */
+  protected function pruneDepth(&$tree, $depth) {
+    foreach ($tree as $key => $item) {
+      if ($depth > 1) {
+        $this->pruneDepth($item['below'], $depth--);
+      }
+      else {
+        $tree[$key]['below'] = array();
+      }
+    }
+  }
+
 }
