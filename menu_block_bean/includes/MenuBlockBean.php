@@ -69,9 +69,11 @@ class MenuBlockBean extends BeanPlugin {
       $this->pruneTree($tree, $parent_mlid);
     }
 
-    $this->pruneDepth($tree, $depth);
+    $this->pruneDepth($tree, $bean->depth);
 
-    return menu_tree_output($tree);
+    $content['bean'][$bean->delta]['menu'] = menu_tree_output($tree);
+
+    return $content;
   }
 
   /**
