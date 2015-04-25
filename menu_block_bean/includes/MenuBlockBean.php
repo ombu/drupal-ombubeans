@@ -65,8 +65,8 @@ class MenuBlockBean extends BeanPlugin {
 
     if ($bean->parent_mlid) {
       list(, $parent_mlid) = explode(':', $bean->parent_mlid);
-
-      $this->pruneTree($tree, $parent_mlid);
+      $parent = menu_link_load($parent_mlid);
+      $this->pruneTree($tree, $parent);
     }
 
     $this->pruneDepth($tree, $bean->depth);
@@ -79,20 +79,26 @@ class MenuBlockBean extends BeanPlugin {
   /**
    * Prune tree to menu item.
    */
-  protected function pruneTree(&$tree, $parent_mlid) {
-    for ($i = 1; $i <= MENU_MAX_DEPTH; $i++) {
+  protected function pruneTree(&$tree, $parent_item) {
+    for ($level = 1; $level <= MENU_MAX_DEPTH && $parent_item["p$level"] != 0; $level++) {
+      $plid = $parent_item["p$level"];
       $found_active_trail = FALSE;
       foreach ($tree as $key => $value) {
-        if ($value['link']['mlid'] == $parent_mlid) {
+        if ($value['link']['mlid'] == $plid) {
           $tree = $tree[$key]['below'] ? $tree[$key]['below'] : array();
-          $found_active_trail = TRUE;
-          break 2;
+          if ($value['link']['mlid'] == $parent_item['mlid']) {
+            $found_active_trail = TRUE;
+            break 2;
+          }
+          else {
+            break;
+          }
         }
       }
-      if (!$found_active_trail) {
-        $tree = array();
-        break;
-      }
+    }
+    if (!$found_active_trail) {
+      $tree = array();
+      break;
     }
   }
 
