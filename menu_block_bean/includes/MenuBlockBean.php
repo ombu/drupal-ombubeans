@@ -98,7 +98,6 @@ class MenuBlockBean extends BeanPlugin {
     }
     if (!$found_active_trail) {
       $tree = array();
-      break;
     }
   }
 
