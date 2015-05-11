@@ -14,7 +14,6 @@ class OmbubeansIFrame extends BeanPlugin {
 
     $values += array(
       'url' => '',
-      'width' => 500,
       'height' => 500,
     );
 
@@ -33,13 +32,6 @@ class OmbubeansIFrame extends BeanPlugin {
       '#required' => TRUE,
     );
 
-    $form['width'] = array(
-      '#type' => 'textfield',
-      '#title' => t('Width'),
-      '#description' => t('Enter the width of this iframe in pixels'),
-      '#default_value' => isset($bean->width) ? $bean->width : '',
-    );
-
     $form['height'] = array(
       '#type' => 'textfield',
       '#title' => t('Height'),
@@ -56,9 +48,6 @@ class OmbubeansIFrame extends BeanPlugin {
   public function validate($values, &$form_state) {
     if (!valid_url($values['url'])) {
       form_set_error('url', t('Please enter a valid URL'));
-    }
-    if ($values['width'] && !is_numeric($values['width'])) {
-      form_set_error('width', t('Please enter a numeric width (e.g. 500)'));
     }
     if ($values['height'] && !is_numeric($values['height'])) {
       form_set_error('height', t('Please enter a numeric height (e.g. 500)'));

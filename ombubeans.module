@@ -68,7 +68,7 @@ function ombubeans_bean_types() {
   );
 
   $plugins['ombubeans_iframe'] = array(
-    'label' => t('iFrame'),
+    'label' => t('Embed block'),
     'handler' => array(
       'class' => 'OmbubeansIFrame',
       'parent' => 'BeanPlugin',
