@@ -79,7 +79,9 @@ class MediaBean extends BeanPlugin {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     if (!empty($bean->fid)) {
       $file = file_load($bean->fid);
-      $content['bean'][$bean->delta]['file'] = file_view($file, isset($bean->file_view_mode) ? $bean->file_view_mode : 'default');
+      if ($file) {
+        $content['bean'][$bean->delta]['file'] = file_view($file, isset($bean->file_view_mode) ? $bean->file_view_mode : 'default');
+      }
     }
 
     return $content;
