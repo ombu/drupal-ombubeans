@@ -74,6 +74,16 @@ class MediaBean extends BeanPlugin {
   }
 
   /**
+   * Implements parent::submit().
+   */
+  public function submit(Bean $bean) {
+    $file = (object) array(
+      'fid' => $bean->fid,
+    );
+    file_usage_add($file, 'file', 'bean', $bean->bid);
+  }
+
+  /**
     * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
