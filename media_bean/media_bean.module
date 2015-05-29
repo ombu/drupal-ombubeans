@@ -74,3 +74,24 @@ function media_bean_ajax_options() {
   print drupal_json_encode($view_modes);
   drupal_exit();
 }
+
+/**
+ * Implements hook_entity_insert().
+ */
+function media_bean_entity_insert($entity, $type) {
+  media_bean_entity_update($entity, $type);
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function media_bean_entity_update($entity, $type) {
+  if ($type == 'bean' && $entity->type == 'media_bean') {
+    if ($entity->fid) {
+      $file = (object) array(
+        'fid' => $entity->fid,
+      );
+      file_usage_add($file, 'file', 'bean', $entity->bid);
+    }
+  }
+}

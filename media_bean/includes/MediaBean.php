@@ -26,6 +26,7 @@ class MediaBean extends BeanPlugin {
     $form['fid'] = array(
       '#type' => 'media',
       '#title' => t('Media file'),
+      '#description' => '',
       '#media_options' => array(
         'global' => array(
           'types' => array(
@@ -45,7 +46,7 @@ class MediaBean extends BeanPlugin {
 
     // Load up file so view modes can be retrieved. If no file is selected,
     // default to an image file.
-    if (isset($bean->fid)) {
+    if (!empty($bean->fid)) {
       $file = file_load($bean->fid);
     }
     else {
@@ -71,18 +72,6 @@ class MediaBean extends BeanPlugin {
     );
 
     return $form;
-  }
-
-  /**
-   * Implements parent::submit().
-   */
-  public function submit(Bean $bean) {
-    if ($bean->fid) {
-      $file = (object) array(
-        'fid' => $bean->fid,
-      );
-      file_usage_add($file, 'file', 'bean', $bean->bid);
-    }
   }
 
   /**
