@@ -77,10 +77,12 @@ class MediaBean extends BeanPlugin {
    * Implements parent::submit().
    */
   public function submit(Bean $bean) {
-    $file = (object) array(
-      'fid' => $bean->fid,
-    );
-    file_usage_add($file, 'file', 'bean', $bean->bid);
+    if ($bean->fid) {
+      $file = (object) array(
+        'fid' => $bean->fid,
+      );
+      file_usage_add($file, 'file', 'bean', $bean->bid);
+    }
   }
 
   /**
