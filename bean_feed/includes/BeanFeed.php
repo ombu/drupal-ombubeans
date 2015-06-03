@@ -115,7 +115,7 @@ class BeanFeed extends BeanPlugin {
 
       // @todo: make this a dedicated theme function, instead of relying on
       // theme_item_list().
-      $content['bean'][$bean->bid]['items'] = array(
+      $content['bean'][$bean->delta]['items'] = array(
         '#weight' => -10,
         '#theme' => 'item_list',
         '#items' => $rendered_items,
