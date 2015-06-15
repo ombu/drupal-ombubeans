@@ -30,6 +30,7 @@ class OmbubeansIFrame extends BeanPlugin {
       '#description' => t('Enter the URL to load within this iFrame'),
       '#default_value' => isset($bean->url) ? $bean->url : '',
       '#required' => TRUE,
+      '#maxlength' => 500,
     );
 
     $form['height'] = array(
