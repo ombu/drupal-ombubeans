@@ -8,7 +8,7 @@
 /**
  * Implements hook_bean_types_api_info().
  */
-function facebook_bean_bean_types_api_info() {
+function bean_facebook_bean_types_api_info() {
   return array(
     'api' => bean_current_version(),
   );
@@ -17,18 +17,18 @@ function facebook_bean_bean_types_api_info() {
 /**
  * Implements hook_bean_types().
  */
-function facebook_bean_bean_types() {
+function bean_facebook_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'facebook_bean');
+  $plugin_path = drupal_get_path('module', 'bean_facebook') . '/plugins';
 
-  $plugins['facebook_bean'] = array(
+  $plugins['bean_facebook'] = array(
     'label' => t('Facebook Feed'),
     'handler' => array(
       'class' => 'FacebookBean',
-      'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'FacebookBean.php',
+      'parent' => 'bean',
     ),
+    'path' => $plugin_path,
+    'file' => 'FacebookBean.class.php',
     'editable' => TRUE,
   );
 
@@ -38,7 +38,7 @@ function facebook_bean_bean_types() {
 /**
  * Implements hook_siteconfig().
  */
-function facebook_bean_siteconfig($op, $form) {
+function bean_facebook_siteconfig($op, $form) {
   if ($op == 'form') {
     $api_key = variable_get('facebook_api_key', '');
     $form['services']['facebook_api_key'] = array(
@@ -57,7 +57,7 @@ function facebook_bean_siteconfig($op, $form) {
  *
  * Include necessary markup for facebook.
  */
-function facebook_bean_preprocess_html(&$variables) {
+function bean_facebook_preprocess_html(&$variables) {
   if (variable_get('facebook_code', FALSE)) {
     $api_key = variable_get('facebook_api_key', '');
 
@@ -75,14 +75,14 @@ EOD;
       '#markup' => $body,
     );
 
-    drupal_add_js(drupal_get_path('module', 'facebook_bean') . '/js/facebook-bean.js');
+    drupal_add_js(drupal_get_path('module', 'bean_facebook') . '/js/drupal.bean-facebook.js');
   }
 }
 
 /**
  * AJAX callback for adding multiple pages.
  */
-function facebook_bean_ajax_callback($form, $form_state) {
+function bean_facebook_ajax_callback($form, $form_state) {
   // If bean is being loaded via tiles.module, then need to return form from
   // bean_form key.
   return isset($form['urls']) ? $form['url'] : $form['bean_form']['urls'];
@@ -91,7 +91,7 @@ function facebook_bean_ajax_callback($form, $form_state) {
 /**
  * Select form for selecting multiple feeds.
  */
-function facebook_bean_select_form($form, $form_state, $bean) {
+function bean_facebook_select_form($form, $form_state, $bean) {
   if (count($bean->urls) > 1) {
     $form['#bean'] = $bean;
 
@@ -104,7 +104,7 @@ function facebook_bean_select_form($form, $form_state, $bean) {
       '#type' => 'select',
       '#options' => $options,
       '#ajax' => array(
-        'callback' => 'facebook_bean_select_callback',
+        'callback' => 'bean_facebook_select_callback',
         'wrapper' => 'facebook-bean-wrapper-' . $bean->delta,
       ),
     );
@@ -116,12 +116,12 @@ function facebook_bean_select_form($form, $form_state, $bean) {
 /**
  * AJAX callback for feed select form.
  */
-function facebook_bean_select_callback($form, $form_state) {
+function bean_facebook_select_callback($form, $form_state) {
   $commands = array();
 
   $commands[] = ajax_command_replace('#facebook-bean-wrapper-' . $form['#bean']->delta, drupal_render(FacebookBean::getLikeBox($form_state['values']['url'], $form['#bean'])));
 
-  $commands[] = array('command' => 'facebook_bean_update');
+  $commands[] = array('command' => 'bean_facebook_update');
 
   return array(
     '#type' => 'ajax',
