@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * featuredbean.fields.inc
+ * bean_featured.fields.inc
  */
 
-function featuredbean_get_default_fields() {
+function bean_featured_get_default_fields() {
   $fields = array();
 
-  // Exported field: 'bean-featuredbean-field_featured_content'.
-  $fields['bean-featuredbean-field_featured_content'] = array(
+  // Exported field: 'bean-bean_featured-field_featured_content'.
+  $fields['bean-bean_featured-field_featured_content'] = array(
     'field_config' => array(
       'active' => 1,
       'cardinality' => -1,
@@ -52,7 +52,7 @@ function featuredbean_get_default_fields() {
 
     ),
     'field_instance' => array(
-      'bundle' => 'featuredbean',
+      'bundle' => 'bean_featured',
       'default_value' => NULL,
       'deleted' => 0,
       'description' => 'Select one or more pieces of content to feature.  Start typing the title of the content and it will be listed in the autocomplete field.',

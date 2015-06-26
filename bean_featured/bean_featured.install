@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Install file for featuredbean module.
+ * Install file for bean_featured module.
  */
 
 /**
  * Implements hook_install().
  */
-function featuredbean_install() {
+function bean_featured_install() {
   // Make sure all bean types and fields are initialized.
   cache_clear_all();
   drupal_static_reset('ctools_plugins');
@@ -17,8 +17,8 @@ function featuredbean_install() {
 
   // Create fields for the beanslide bean type. Mimics logic found in
   // features.field.inc, in the field_features_rebuild() function.
-  module_load_include('inc', 'featuredbean', 'featuredbean.fields');
-  $fields = featuredbean_get_default_fields();
+  module_load_include('inc', 'bean_featured', 'bean_featured.fields');
+  $fields = bean_featured_get_default_fields();
   foreach ($fields as $field) {
     // Create only.
     // TODO determine what to do, if anything, if these fields exist already.
