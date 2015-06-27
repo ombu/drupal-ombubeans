@@ -8,7 +8,7 @@
 /**
  * Implements hook_bean_types_api_info().
  */
-function menu_block_bean_bean_types_api_info() {
+function bean_menu_block_bean_types_api_info() {
   return array(
     'api' => bean_current_version(),
   );
@@ -17,18 +17,18 @@ function menu_block_bean_bean_types_api_info() {
 /**
  * Implements hook_bean_types().
  */
-function menu_block_bean_bean_types() {
+function bean_menu_block_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'menu_block_bean');
+  $plugin_path = drupal_get_path('module', 'bean_menu_block') . '/plugins';
 
-  $plugins['menu_block_bean'] = array(
+  $plugins['bean_menu_block'] = array(
     'label' => t('Menu block'),
     'handler' => array(
       'class' => 'MenuBlockBean',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'MenuBlockBean.php',
     ),
+    'path' => $plugin_path,
+    'file' => 'MenuBlockBean.class.php',
   );
 
   return $plugins;
