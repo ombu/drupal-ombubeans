@@ -1,23 +1,23 @@
 <?php
 /**
  * @file
- * linkbean.features.field.inc
+ * bean_link.features.field.inc
  */
 
 /**
  * Implements hook_field_default_fields().
  */
-function linkbean_field_default_fields() {
+function bean_link_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'bean-linkbean-field_linkbean_links'.
-  $fields['bean-linkbean-field_linkbean_links'] = array(
+  // Exported field: 'bean-bean_link-field_linkbean_links'.
+  $fields['bean-bean_link-field_linkbean_links'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_linkbean_links',
+      'field_name' => 'field_bean_link_links',
       'foreign keys' => array(),
       'indexes' => array(),
       'locked' => '0',
@@ -41,7 +41,7 @@ function linkbean_field_default_fields() {
       'type' => 'link_field',
     ),
     'field_instance' => array(
-      'bundle' => 'linkbean',
+      'bundle' => 'bean_link',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
@@ -55,7 +55,7 @@ function linkbean_field_default_fields() {
         ),
       ),
       'entity_type' => 'bean',
-      'field_name' => 'field_linkbean_links',
+      'field_name' => 'field_bean_link_links',
       'label' => 'Links',
       'required' => 0,
       'settings' => array(

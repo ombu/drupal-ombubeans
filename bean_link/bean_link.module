@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Something about the file
+ * Bean that provides a simple listing of links.
  */
 
 
@@ -13,7 +13,7 @@
 /**
  * Implements hook_bean_types_api_info().
  */
-function linkbean_bean_types_api_info() {
+function bean_link_bean_types_api_info() {
   return array(
     'api' => bean_current_version(),
   );
@@ -22,18 +22,18 @@ function linkbean_bean_types_api_info() {
 /**
  * Implements hook_bean_types().
  */
-function linkbean_bean_types() {
+function bean_link_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'linkbean');
+  $plugin_path = drupal_get_path('module', 'bean_link') . '/plugins';
 
-  $plugins['linkbean'] = array(
+  $plugins['bean_link'] = array(
     'label' => t('Links'),
     'handler' => array(
       'class' => 'LinkBean',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path,
-      'file' => 'LinkBean.class.php',
     ),
+    'path' => $plugin_path,
+    'file' => 'LinkBean.class.php',
     'editable' => TRUE,
   );
 
@@ -43,13 +43,13 @@ function linkbean_bean_types() {
 /**
  * Implements hook_bean_style_info().
  */
-function linkbean_bean_style_info() {
+function bean_link_bean_style_info() {
   return array(
-    'linkbean_style'  => array(
+    'bean_link_style'  => array(
       'label' => 'Default',
       'class' => 'LinkBeanStyle',
       'bean_types' => array(
-        'linkbean',
+        'bean_link',
       ),
     ),
   );
@@ -58,9 +58,9 @@ function linkbean_bean_style_info() {
 /**
  * Implements hook_bean_style_options().
  */
-function linkbean_bean_style_options(&$options, $context) {
-  // Remove default style for linkbean styles.
-  if ($context['bean']->type == 'linkbean') {
+function bean_link_bean_style_options(&$options, $context) {
+  // Remove default style for bean_link styles.
+  if ($context['bean']->type == 'bean_link') {
     unset($options['']);
   }
 }
