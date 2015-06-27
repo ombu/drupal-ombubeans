@@ -66,7 +66,7 @@ class MediaBean extends BeanPlugin {
       '#default_value' => isset($bean->file_view_mode) ? $bean->file_view_mode : NULL,
       '#attached' => array(
         'js' => array(
-          drupal_get_path('module', 'media_bean') . '/js/media-bean.drupal.js',
+          drupal_get_path('module', 'media_bean') . '/js/drupal.media-bean.js',
         ),
       ),
     );

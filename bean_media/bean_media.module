@@ -11,12 +11,12 @@
 /**
  * Implements hook_menu().
  */
-function media_bean_menu() {
+function bean_media_menu() {
   $items = array();
 
   $items['media-bean-options'] = array(
-    'page callback' => 'media_bean_ajax_options',
-    'access arguments' => array('create an media_bean bean'),
+    'page callback' => 'bean_media_ajax_options',
+    'access arguments' => array('create an bean_media bean'),
     'type' => MENU_CALLBACK,
   );
 
@@ -26,7 +26,7 @@ function media_bean_menu() {
 /**
  * Implements hook_bean_types_api_info().
  */
-function media_bean_bean_types_api_info() {
+function bean_media_bean_types_api_info() {
   return array(
     'api' => bean_current_version(),
   );
@@ -35,18 +35,18 @@ function media_bean_bean_types_api_info() {
 /**
  * Implements hook_bean_types().
  */
-function media_bean_bean_types() {
+function bean_media_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'media_bean');
+  $plugin_path = drupal_get_path('module', 'bean_media') . '/plugins';
 
-  $plugins['media_bean'] = array(
+  $plugins['bean_media'] = array(
     'label' => t('Media Block'),
     'handler' => array(
       'class' => 'MediaBean',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'MediaBean.php',
     ),
+    'path' => $plugin_path,
+    'file' => 'MediaBean.class.php',
     'editable' => TRUE,
   );
 
@@ -56,7 +56,7 @@ function media_bean_bean_types() {
 /**
  * AJAX callback for dynamically updating file view options.
  */
-function media_bean_ajax_options() {
+function bean_media_ajax_options() {
   if (!is_numeric($_GET['fid'])) {
     return MENU_NOT_FOUND;
   }
@@ -78,15 +78,15 @@ function media_bean_ajax_options() {
 /**
  * Implements hook_entity_insert().
  */
-function media_bean_entity_insert($entity, $type) {
-  media_bean_entity_update($entity, $type);
+function bean_media_entity_insert($entity, $type) {
+  bean_media_entity_update($entity, $type);
 }
 
 /**
  * Implements hook_entity_update().
  */
-function media_bean_entity_update($entity, $type) {
-  if ($type == 'bean' && $entity->type == 'media_bean') {
+function bean_media_entity_update($entity, $type) {
+  if ($type == 'bean' && $entity->type == 'bean_media') {
     if ($entity->fid) {
       $file = (object) array(
         'fid' => $entity->fid,

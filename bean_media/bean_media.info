@@ -2,5 +2,5 @@ name = Media Bean
 description = A simple bean that allows embedding media files in blocks
 version = 7.x-0.1
 core = 7.x
+package = bean
 dependencies[] = media
-file[] = includes/MediaBean.php
