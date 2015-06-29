@@ -1,0 +1,6 @@
+name = Twitter bean
+description = Provides a block showing a twitter feed
+version = 7.x-0.1
+core = 7.x
+package = bean
+dependencies[] = bean

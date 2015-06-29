@@ -5,7 +5,7 @@
  * Twitter feed bean.
  */
 
-class OmbubeansTwitter extends BeanPlugin {
+class BeanTwitter extends BeanPlugin {
   /**
    * Implements parent::values().
    */
@@ -67,7 +67,7 @@ class OmbubeansTwitter extends BeanPlugin {
       '#name' => 'add',
       '#value' => t('Add another widget'),
       '#ajax' => array(
-        'callback' => 'ombubeans_twitter_bean_ajax_callback',
+        'callback' => 'bean_twitter_bean_ajax_callback',
         'wrapper' => 'widgets-wrapper',
       ),
       '#limit_validation_errors' => array(),
@@ -92,7 +92,7 @@ class OmbubeansTwitter extends BeanPlugin {
    * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    $content['bean'][$bean->delta]['form'] = drupal_get_form('ombubeans_twitter_bean_select_form', $bean);
+    $content['bean'][$bean->delta]['form'] = drupal_get_form('bean_twitter_bean_select_form', $bean);
 
     $content['bean'][$bean->delta]['widget'] = array(
       '#prefix' => '<div id="twitter-widget-wrapper-' . $bean->delta . '">',
@@ -100,7 +100,7 @@ class OmbubeansTwitter extends BeanPlugin {
       '#markup' => $bean->widgets[0]['widget'],
       '#attached' => array(
         'js' => array(
-          drupal_get_path('module', 'ombubeans') . '/js/ombubeans-twitter-bean.js',
+          drupal_get_path('module', 'bean_twitter') . '/js/bean-twitter.drupal.js',
         ),
       ),
     );
