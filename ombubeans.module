@@ -4,46 +4,6 @@
  * Basic beans to share across sites.
  */
 
-/**
- * Implements hook_bean_types_api_info().
- */
-function ombubeans_bean_types_api_info() {
-  return array(
-    'api' => bean_current_version(),
-  );
-}
-
-/**
- * Implements hook_bean_types().
- */
-function ombubeans_bean_types() {
-  $plugins = array();
-  $plugin_path = drupal_get_path('module', 'ombubeans');
-
-  $plugins['ombubeans_twitter'] = array(
-    'label' => t('Twitter Block'),
-    'handler' => array(
-      'class' => 'OmbubeansTwitter',
-      'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'OmbubeansTwitter.php',
-    ),
-    'editable' => TRUE,
-  );
-
-  $plugins['ombubeans_popular_content'] = array(
-    'label' => t('Most Popular Content'),
-    'handler' => array(
-      'class' => 'OmbubeansPopularContent',
-      'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'OmbubeansPopularContent.php',
-    ),
-    'editable' => TRUE,
-  );
-
-  return $plugins;
-}
 
 /**
  * Implements hook_preprocess_block().

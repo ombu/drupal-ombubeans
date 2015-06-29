@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Popular content bean.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_popular_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_popular_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_popular') . '/plugins';
+
+  $plugins['popular_content'] = array(
+    'label' => t('Most Popular Content'),
+    'handler' => array(
+      'class' => 'BeanPopularContent',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'BeanPopularContent.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Provides the OmbubeansPopularContent class.
+ * Provides the BeanPopularContent class.
  */
 
-class OmbubeansPopularContent extends BeanPlugin {
+class BeanPopularContent extends BeanPlugin {
 
   /**
    * Implements parent::values().
@@ -139,4 +139,5 @@ class OmbubeansPopularContent extends BeanPlugin {
 
     return $content;
   }
+
 }
