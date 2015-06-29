@@ -1,0 +1,6 @@
+name = Placeholder Beans
+description = Simple placeholder beans used during site building
+version = 7.x-0.1
+core = 7.x
+package = bean
+dependencies[] = bean

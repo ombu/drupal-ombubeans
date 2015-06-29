@@ -2,18 +2,19 @@
 
 /**
  * @file
- * FPO block bean.
+ * FPO Hero block bean.
  */
 
-
-class OmbubeansFPO extends BeanPlugin {
+class FPOHeroBean extends BeanPlugin {
   /**
    * Implements parent::values().
    */
   public function values() {
     $values = parent::values();
     $values += array(
-      'height' => 100,
+      'body'  => 'Hello World',
+      'width'  => '12',
+      'color'  => 'blue',
     );
     return $values;
   }
@@ -24,11 +25,11 @@ class OmbubeansFPO extends BeanPlugin {
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
 
-    $form['height'] = array(
-      '#title' => t('Height'),
-      '#type' => 'textfield',
+    $form['body'] = array(
+      '#title' => t('Body'),
+      '#type' => 'textarea',
       '#required' => TRUE,
-      '#default_value' => $bean->height,
+      '#default_value' => $bean->body,
       '#description' => t('In px'),
     );
 
@@ -39,11 +40,13 @@ class OmbubeansFPO extends BeanPlugin {
    * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    $width = tiles_get_width('bean', $bean->delta);
-
     $content['bean'][$bean->delta][] = array(
-      '#markup' => sprintf('<img style="width: 100%%; min-height:%spx" src="http://placehold.it/600x%d&text=FPO"
-      class="img-polaroid">', $bean->height, $bean->height, $width),
+        '#markup' => sprintf(<<<EOF
+<div class="jumbotron">
+  %s
+</div>
+EOF
+    , $bean->body),
     );
     return $content;
   }
