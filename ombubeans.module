@@ -42,17 +42,6 @@ function ombubeans_bean_types() {
     'editable' => TRUE,
   );
 
-  $plugins['ombubeans_iframe'] = array(
-    'label' => t('Embed block'),
-    'handler' => array(
-      'class' => 'OmbubeansIFrame',
-      'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'OmbubeansIFrame.php',
-    ),
-    'editable' => TRUE,
-  );
-
   return $plugins;
 }
 

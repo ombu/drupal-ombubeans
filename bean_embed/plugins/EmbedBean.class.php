@@ -2,10 +2,10 @@
 
 /**
  * @file
- * iFrame Bean.
+ * Embed bean.
  */
 
-class OmbubeansIFrame extends BeanPlugin {
+class EmbedBean extends BeanPlugin {
   /**
    * Implements parent::values().
    */
