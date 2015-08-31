@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Embed (iFrame) bean.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_embed_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_embed_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_embed') . '/plugins';
+
+  $plugins['bean_embed'] = array(
+    'label' => t('Embed block'),
+    'handler' => array(
+      'class' => 'EmbedBean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'EmbedBean.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}

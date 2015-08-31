@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * @file
+ * Bean that provides a simple listing of links.
+ */
+
+
+/**
+ * Hooks
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_link_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_link_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_link') . '/plugins';
+
+  $plugins['bean_link'] = array(
+    'label' => t('Links'),
+    'handler' => array(
+      'class' => 'LinkBean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'LinkBean.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function bean_link_bean_style_info() {
+  return array(
+    'bean_link_style'  => array(
+      'label' => 'Default',
+      'class' => 'LinkBeanStyle',
+      'bean_types' => array(
+        'bean_link',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options().
+ */
+function bean_link_bean_style_options(&$options, $context) {
+  // Remove default style for bean_link styles.
+  if ($context['bean']->type == 'bean_link') {
+    unset($options['']);
+  }
+}
