@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Placeholder beans.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_fpo_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_fpo_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_fpo') . '/plugins';
+
+  $plugins['fpo'] = array(
+    'label' => t('FPO Block'),
+    'handler' => array(
+      'class' => 'FPOBean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'FPOBean.class.php',
+    'editable' => TRUE,
+  );
+
+  $plugins['fpo_hero'] = array(
+    'label' => t('FPO Hero Block'),
+    'handler' => array(
+      'class' => 'FPOHeroBean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'FPOHeroBean.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+

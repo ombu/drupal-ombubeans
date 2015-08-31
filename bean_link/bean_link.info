@@ -1,0 +1,12 @@
+name = Links Bean
+description = Provides a links field and bean
+core = 7.x
+package = OMBU Beans
+php = 5.3
+dependencies[] = bean
+dependencies[] = features
+dependencies[] = field
+dependencies[] = link
+features[features_api][] = api:1
+features[field][] = bean-bean_link-field_linkbean_links
+files[] = plugins/LinkBeanStyle.php

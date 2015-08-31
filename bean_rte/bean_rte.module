@@ -20,16 +20,16 @@ function bean_rte_bean_types_api_info() {
  */
 function bean_rte_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'bean_rte');
+  $plugin_path = drupal_get_path('module', 'bean_rte') . '/plugins';
 
   $plugins['bean_rte_rte'] = array(
     'label' => t('Rich text block'),
     'handler' => array(
       'class' => 'RteBean',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'RteBean.php',
     ),
+    'path' => $plugin_path,
+    'file' => 'RteBean.class.php',
     'editable' => TRUE,
   );
 

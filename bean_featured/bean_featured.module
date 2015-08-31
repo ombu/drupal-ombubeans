@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @file
+ * Something about the file
+ */
+
+
+/**
+ * Hooks
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_featured_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_featured_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_featured') . '/plugins';
+
+  $plugins['bean_featured'] = array(
+    'label' => t('Featured Content'),
+    'handler' => array(
+      'class' => 'Featuredbean',
+      'parent' => 'BeanPlugin',
+    ),
+    'path' => $plugin_path,
+    'file' => 'FeaturedBean.class.php',
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}

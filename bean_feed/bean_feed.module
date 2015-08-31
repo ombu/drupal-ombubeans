@@ -19,16 +19,16 @@ function bean_feed_bean_types_api_info() {
  */
 function bean_feed_bean_types() {
   $plugins = array();
-  $plugin_path = drupal_get_path('module', 'bean_feed');
+  $plugin_path = drupal_get_path('module', 'bean_feed') . '/plugins';
 
   $plugins['bean_feed'] = array(
     'label' => t('Feed'),
     'handler' => array(
       'class' => 'BeanFeed',
       'parent' => 'BeanPlugin',
-      'path' => $plugin_path . '/includes',
-      'file' => 'BeanFeed.php',
     ),
+    'path' => $plugin_path,
+    'file' => 'BeanFeed.class.php',
     'editable' => TRUE,
   );
 
@@ -38,10 +38,16 @@ function bean_feed_bean_types() {
 /**
  * Implements hook_theme().
  */
-function bean_feed_theme($existing, $type, $theme, $path) {
+function bean_feed_theme() {
   return array(
     'bean_feed_item' => array(
-      'variables' => array('bean' => NULL, 'link' => NULL, 'title' => NULL, 'description' => NULL, 'date' => NULL),
+      'variables' => array(
+        'bean' => NULL,
+        'link' => NULL,
+        'title' => NULL,
+        'description' => NULL,
+        'date' => NULL,
+      ),
       'template' => 'bean-feed-item',
     ),
   );
