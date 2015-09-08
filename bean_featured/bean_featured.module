@@ -29,7 +29,7 @@ function bean_featured_bean_types() {
   $plugins['bean_featured'] = array(
     'label' => t('Featured Content'),
     'handler' => array(
-      'class' => 'Featuredbean',
+      'class' => 'FeaturedBean',
       'parent' => 'BeanPlugin',
     ),
     'path' => $plugin_path,
