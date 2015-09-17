@@ -21,7 +21,7 @@ class MenuBlockBean extends BeanPlugin {
   public function __construct($plugin_info) {
     parent::__construct($plugin_info);
 
-    $this->menuName = variable_get('menu_main_links_source', 'main-menu');
+    $this->menuNames = variable_get('bean_menu_block_menu_sources', array('main-menu' => 'Main menu'));
   }
 
   /**
@@ -43,7 +43,7 @@ class MenuBlockBean extends BeanPlugin {
   public function form($bean, $form, &$form_state) {
     $form = parent::form($bean, $form, $form_state);
 
-    $options = menu_parent_options(array($this->menuName => 'Main menu'), array('mlid' => 0));
+    $options = menu_parent_options($this->menuNames, array('mlid' => 0));
     $form['parent_mlid'] = array(
       '#type' => 'select',
       '#title' => t('Parent link'),
@@ -51,6 +51,11 @@ class MenuBlockBean extends BeanPlugin {
       '#options' => $options,
       '#description' => t('Select the menu item for which to show children of.'),
       '#attributes' => array('class' => array('menu-title-select')),
+    );
+
+    $form['depth'] = array(
+      '#type' => 'hidden',
+      '#default_value' => $bean->depth,
     );
 
     return $form;
@@ -61,10 +66,10 @@ class MenuBlockBean extends BeanPlugin {
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     // Todo: allow other menus to be selected.
-    $tree = menu_tree_all_data($this->menuName);
+    list($menu_name, $parent_mlid) = explode(':', $bean->parent_mlid);
+    $tree = menu_tree_all_data($menu_name);
 
-    if ($bean->parent_mlid) {
-      list(, $parent_mlid) = explode(':', $bean->parent_mlid);
+    if ($parent_mlid) {
       $parent = menu_link_load($parent_mlid);
       $this->pruneTree($tree, $parent);
     }
