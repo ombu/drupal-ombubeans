@@ -107,7 +107,7 @@ class MenuBlockBean extends BeanPlugin {
   protected function pruneDepth(&$tree, $depth) {
     foreach ($tree as $key => $item) {
       if ($depth > 1) {
-        $this->pruneDepth($item['below'], $depth--);
+        $this->pruneDepth($tree[$key]['below'], ($depth - 1));
       }
       else {
         $tree[$key]['below'] = array();
