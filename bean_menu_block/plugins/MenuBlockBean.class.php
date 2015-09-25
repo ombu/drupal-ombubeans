@@ -85,6 +85,8 @@ class MenuBlockBean extends BeanPlugin {
    * Prune tree to menu item.
    */
   protected function pruneTree(&$tree, $parent_item) {
+    $found_active_trail = FALSE;
+
     for ($level = 1; $level <= MENU_MAX_DEPTH && $parent_item["p$level"] != 0; $level++) {
       $plid = $parent_item["p$level"];
       $found_active_trail = FALSE;
