@@ -36,6 +36,38 @@ function bean_feed_bean_types() {
 }
 
 /**
+ * Implements hook_bean_style_info().
+ */
+function bean_feed_bean_style_info() {
+  return array(
+    'bean_feed_full' => array(
+      'label' => 'Full',
+      'class' => 'BeanStyleFeedFull',
+      'bean_types' => array(
+        'bean_feed',
+      ),
+    ),
+    'bean_feed_links' => array(
+      'label' => 'Links',
+      'class' => 'BeanStyleFeedLinks',
+      'bean_types' => array(
+        'bean_feed',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options_alter().
+ */
+function bean_feed_bean_style_options_alter(&$options, $context) {
+  if ($context['bundle'] == 'bean_feed') {
+    // Remove default option for bean feed.
+    unset($options['']);
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function bean_feed_theme() {
