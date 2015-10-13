@@ -29,6 +29,7 @@ function bean_menu_block_bean_types() {
     ),
     'path' => $plugin_path,
     'file' => 'MenuBlockBean.class.php',
+    'editable' => TRUE,
   );
 
   return $plugins;
