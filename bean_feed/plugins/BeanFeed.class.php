@@ -170,7 +170,7 @@ class BeanFeed extends BeanPlugin {
           'item' => $item,
           'link' => $item->getUrl(),
           'title' => $item->getTitle(),
-          'description' => $bean->title_only ? NULL : $item->getContent(),
+          'description' => $item->getContent(),
           'date' => $item->getDate(),
         );
         $key++;
