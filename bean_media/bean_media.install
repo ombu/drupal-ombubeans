@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for bean_media.module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bean_media_install() {
+  // Make sure all bean types and fields are initialized.
+  cache_clear_all();
+  drupal_static_reset('ctools_plugins');
+  drupal_static_reset('bean_load_plugin_class');
+  _field_info_collate_types(TRUE);
+
+  // Create fields for the beanslide bean type. Mimics logic found in
+  // features.field.inc, in the field_features_rebuild() function.
+  module_load_include('inc', 'bean_media', 'bean_media.fields');
+  $fields = bean_media_get_default_fields();
+  foreach ($fields as $field) {
+    // Create only.
+    // TODO determine what to do, if anything, if these fields exist already.
+    $field_config = $field['field_config'];
+    if (!field_info_field($field_config['field_name'])) {
+      field_create_field($field_config);
+    }
+
+    // Create field instance (no update, again, see TODO above).
+    $field_instance = $field['field_instance'];
+    if (!field_info_instance($field_instance['entity_type'], $field_instance['field_name'], $field_instance['bundle'])) {
+      field_create_instance($field_instance);
+    }
+  }
+
+  variable_set('menu_rebuild_needed', TRUE);
+}
