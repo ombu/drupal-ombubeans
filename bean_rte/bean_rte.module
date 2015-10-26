@@ -23,7 +23,7 @@ function bean_rte_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_rte') . '/plugins';
 
   $plugins['bean_rte_rte'] = array(
-    'label' => t('Rich text block'),
+    'label' => t('Rich text'),
     'handler' => array(
       'class' => 'RteBean',
       'parent' => 'BeanPlugin',

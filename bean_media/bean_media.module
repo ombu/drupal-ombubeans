@@ -40,7 +40,7 @@ function bean_media_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_media') . '/plugins';
 
   $plugins['bean_media'] = array(
-    'label' => t('Media Block'),
+    'label' => t('Media'),
     'handler' => array(
       'class' => 'MediaBean',
       'parent' => 'BeanPlugin',

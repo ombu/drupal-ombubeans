@@ -22,7 +22,7 @@ function bean_menu_block_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_menu_block') . '/plugins';
 
   $plugins['bean_menu_block'] = array(
-    'label' => t('Menu block'),
+    'label' => t('Menu'),
     'handler' => array(
       'class' => 'MenuBlockBean',
       'parent' => 'BeanPlugin',
