@@ -12,7 +12,7 @@ class LinkBeanStyle extends BeanStyle {
   public function prepareView($build, $bean) {
     parent::prepareView($build, $bean);
 
-    $build['field_linkbean_links'] = array(
+    $build['field_bean_link_links'] = array(
       '#theme' => 'item_list',
       '#items' => $this->items,
       '#attributes' => array(
@@ -27,8 +27,8 @@ class LinkBeanStyle extends BeanStyle {
    * Implements parent::prepareItems().
    */
   protected function prepareItems($build, $type) {
-    foreach (element_children($build['field_linkbean_links']) as $child) {
-      $this->items[] = drupal_render($build['field_linkbean_links'][$child]);
+    foreach (element_children($build['field_bean_link_links']) as $child) {
+      $this->items[] = drupal_render($build['field_bean_link_links'][$child]);
     }
   }
 }
