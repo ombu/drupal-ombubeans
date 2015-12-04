@@ -61,10 +61,11 @@ class EmbedBean extends BeanPlugin {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     if (isset($bean->url)) {
       $content['bean'][$bean->delta]['iframe'] = array(
-        '#markup' => t('<iframe frameborder="0" src="!src" width="!width" height="!height"></iframe>', array(
+        '#markup' => t('<iframe id="!id" frameborder="0" src="!src" width="!width" height="!height"></iframe>', array(
           '!src' => $bean->url,
           '!width' => isset($bean->width) ? $bean->width : '100%',
           '!height' => isset($bean->height) ? $bean->height : '100%',
+          '!id' => $bean->delta . '-iframe',
         )),
       );
     }
