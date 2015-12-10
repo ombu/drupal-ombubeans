@@ -18,6 +18,10 @@ class BeanStyleFeedFull extends BeanStyle {
       $rendered_items[] = theme('bean_feed_item', $item);
     }
 
+    // Remove items so bean can be properly cached, since XML object can't be
+    // serialized.
+    unset($build['#items']);
+
     $build['feed'] = array(
       '#theme' => 'item_list',
       '#items' => $rendered_items,
