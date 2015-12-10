@@ -39,3 +39,13 @@ function bean_featured_bean_types() {
 
   return $plugins;
 }
+
+/**
+ * Implements hook_views_api().
+ */
+function bean_featured_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'bean_featured') . '/views',
+  );
+}
