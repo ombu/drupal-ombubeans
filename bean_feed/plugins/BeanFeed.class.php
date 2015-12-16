@@ -150,6 +150,20 @@ class BeanFeed extends BeanPlugin {
     // Load up the feed using Zend_Feed, which requires Zend_Loader_Autoloader.
     require_once drupal_get_path('module', 'bean_feed') . '/vendor/autoload.php';
 
+    // Get cache values for this feed/count combo
+    $cache_id = 'beanfeed:' . md5($url . '-count' . $bean->limit);
+    if ($data = cache_get($cache_id)) {
+      $data = $data->data;
+
+      $items = array();
+      foreach ($data['items'] as $item) {
+        $item['item'] = json_decode($item['item']);
+        $items[] = $item;
+      }
+
+      return $items;
+    }
+
     try {
       $reader = new \PicoFeed\Reader\Reader();
       $resource = $reader->download($url);
@@ -175,6 +189,17 @@ class BeanFeed extends BeanPlugin {
         );
         $key++;
       }
+
+      $data = array(
+        'items' => array(),
+      );
+      // Serialize feed items as json, since simplexml doesn't support
+      // serialization.
+      foreach ($items as $item) {
+        $item['item'] = json_encode($item['item']);
+        $data['items'][] = $item;
+      }
+      cache_set($cache_id, $data, 'cache', CACHE_TEMPORARY);
     }
     catch (\PicoFeed\PicoFeedException $e) {
       watchdog('bean_feed', 'Invalid feed URI: !message', array('!message' => $e->getMessage()));
