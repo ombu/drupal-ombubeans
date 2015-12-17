@@ -79,6 +79,7 @@ function bean_feed_theme() {
         'title' => NULL,
         'description' => NULL,
         'date' => NULL,
+        'author' => NULL,
       ),
       'template' => 'bean-feed-item',
     ),

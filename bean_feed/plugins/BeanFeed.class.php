@@ -186,6 +186,7 @@ class BeanFeed extends BeanPlugin {
           'title' => $item->getTitle(),
           'description' => $item->getContent(),
           'date' => $item->getDate(),
+          'author' => $item->getAuthor(),
         );
         $key++;
       }
