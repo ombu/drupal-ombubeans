@@ -7,3 +7,5 @@ dependencies[] = bean
 dependencies[] = features
 dependencies[] = field
 dependencies[] = entityreference
+
+files[] = views/bean_featured.views_default.inc

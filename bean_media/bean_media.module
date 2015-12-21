@@ -40,7 +40,7 @@ function bean_media_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_media') . '/plugins';
 
   $plugins['bean_media'] = array(
-    'label' => t('Media Block'),
+    'label' => t('Media'),
     'handler' => array(
       'class' => 'MediaBean',
       'parent' => 'BeanPlugin',
@@ -51,47 +51,4 @@ function bean_media_bean_types() {
   );
 
   return $plugins;
-}
-
-/**
- * AJAX callback for dynamically updating file view options.
- */
-function bean_media_ajax_options() {
-  if (!is_numeric($_GET['fid'])) {
-    return MENU_NOT_FOUND;
-  }
-
-  $file = file_load($_GET['fid']);
-
-  $modes = media_get_wysiwyg_allowed_view_modes($file);
-  foreach ($modes as $mode => $info) {
-    $view_modes[] = array(
-      'value' => $mode,
-      'name' => $info['label']
-    );
-  }
-
-  print drupal_json_encode($view_modes);
-  drupal_exit();
-}
-
-/**
- * Implements hook_entity_insert().
- */
-function bean_media_entity_insert($entity, $type) {
-  bean_media_entity_update($entity, $type);
-}
-
-/**
- * Implements hook_entity_update().
- */
-function bean_media_entity_update($entity, $type) {
-  if ($type == 'bean' && $entity->type == 'bean_media') {
-    if ($entity->fid) {
-      $file = (object) array(
-        'fid' => $entity->fid,
-      );
-      file_usage_add($file, 'file', 'bean', $entity->bid);
-    }
-  }
 }

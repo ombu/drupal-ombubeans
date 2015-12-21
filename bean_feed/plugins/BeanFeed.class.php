@@ -15,7 +15,6 @@ class BeanFeed extends BeanPlugin {
     $values += array(
       'feeds' => array(),
       'limit' => 10,
-      'title_only' => FALSE,
     );
     return $values;
   }
@@ -79,15 +78,8 @@ class BeanFeed extends BeanPlugin {
       '#type' => 'select',
       '#title' => t('Item count'),
       '#description' => t('The number of items to display from the feed'),
-      '#options' => range(1, 10),
+      '#options' => drupal_map_assoc(range(1, 10), range(1, 10)),
       '#default_value' => $bean->limit,
-    );
-
-    $form['title_only'] = array(
-      '#type' => 'checkbox',
-      '#title' => t('Show only title'),
-      '#description' => t('Hide feed item body and only show title.'),
-      '#default_value' => $bean->title_only,
     );
 
     return $form;
@@ -130,20 +122,12 @@ class BeanFeed extends BeanPlugin {
 
       $content['bean'][$bean->delta]['form'] = drupal_get_form('bean_feed_select_form', $bean);
 
-      $rendered_items = array();
-      foreach ($items as $item) {
-        $rendered_items[] = theme('bean_feed_item', $item);
-      }
+      $content['bean'][$bean->delta]['#items'] = $items;
 
-      // @todo: make this a dedicated theme function, instead of relying on
-      // theme_item_list().
-      $content['bean'][$bean->delta]['items'] = array(
-        '#theme' => 'item_list',
-        '#items' => $rendered_items,
-        '#attributes' => array(
-          'id' => 'bean-feed-wrapper-' . $bean->delta,
-        ),
-      );
+      // Allow bean styles to alter build.
+      if (module_exists('bean_style')) {
+        bean_style_view_alter($content, $bean);
+      }
     }
 
     return $content;
@@ -151,9 +135,6 @@ class BeanFeed extends BeanPlugin {
 
   /**
    * Returns feed items given an URL.
-   *
-   * Since feed is queried using Zend_Feed, which is rather expensive, feed
-   * results are cached for 5 minutes.
    *
    * @param BeanFeed $bean
    *   Bean object.
@@ -166,45 +147,63 @@ class BeanFeed extends BeanPlugin {
   static public function getFeedItems($bean, $url) {
     $items = array();
 
-    // Cache the expensive Zend_Feed operations.
-    $cache_id = md5('bean_feed_' . $bean->bid . '_' . $url);
-    if ($cache = cache_get($cache_id)) {
-      $items = $cache->data;
+    // Load up the feed using Zend_Feed, which requires Zend_Loader_Autoloader.
+    require_once drupal_get_path('module', 'bean_feed') . '/vendor/autoload.php';
+
+    // Get cache values for this feed/count combo
+    $cache_id = 'beanfeed:' . md5($url . '-count' . $bean->limit);
+    if ($data = cache_get($cache_id)) {
+      $data = $data->data;
+
+      $items = array();
+      foreach ($data['items'] as $item) {
+        $item['item'] = json_decode($item['item']);
+        $items[] = $item;
+      }
+
+      return $items;
     }
-    else {
-      // Load up the feed using Zend_Feed, which requires Zend_Loader_Autoloader.
-      $path = drupal_get_path('module', 'bean_feed') . '/includes';
-      set_include_path($path . PATH_SEPARATOR . get_include_path());
-      include_once 'Zend/Loader/Autoloader.php';
-      $loader = Zend_Loader_Autoloader::getInstance();
 
-      try {
-        $feed = Zend_Feed::import($url);
+    try {
+      $reader = new \PicoFeed\Reader\Reader();
+      $resource = $reader->download($url);
 
-        $items = array();
-        $i = 0;
-        foreach ($feed as $item) {
-          $items[] = array(
-            'bean' => $bean,
-            'link' => $item->link(),
-            'title' => $item->title(),
-            'description' => $bean->title_only ? NULL : $item->description(),
-            'date' => $item->pubDate(),
-          );
-          if ($i++ == $bean->limit) {
-            break;
-          }
-        }
+      $parser = $reader->getParser(
+        $resource->getUrl(),
+        $resource->getContent(),
+        $resource->getEncoding()
+      );
 
-        // Cache results for 5 minutes.
-        cache_set($cache_id, $items, 'cache', time() + 300);
+      $feed = $parser->execute();
+
+      $key = 0;
+      while (isset($feed->items[$key]) && $key < $bean->limit) {
+        $item = $feed->items[$key];
+        $items[] = array(
+          'bean' => $bean,
+          'item' => $item,
+          'link' => $item->getUrl(),
+          'title' => $item->getTitle(),
+          'description' => $item->getContent(),
+          'date' => $item->getDate(),
+          'author' => $item->getAuthor(),
+        );
+        $key++;
       }
-      catch (Zend_Uri_Exception $e) {
-        watchdog('bean_feed', 'Invalid feed URI: !message', array('!message' => $e->getMessage()));
+
+      $data = array(
+        'items' => array(),
+      );
+      // Serialize feed items as json, since simplexml doesn't support
+      // serialization.
+      foreach ($items as $item) {
+        $item['item'] = json_encode($item['item']);
+        $data['items'][] = $item;
       }
-      catch (Exception $e) {
-        watchdog('bean_feed', 'Exception caught importing feed: !message', array('!message' => $e->getMessage()));
-      }
+      cache_set($cache_id, $data, 'cache', CACHE_TEMPORARY);
+    }
+    catch (\PicoFeed\PicoFeedException $e) {
+      watchdog('bean_feed', 'Invalid feed URI: !message', array('!message' => $e->getMessage()));
     }
 
     return $items;
