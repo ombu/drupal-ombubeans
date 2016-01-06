@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install hooks for bean_callout.module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function bean_callout_install() {
+  db_query("UPDATE {system} SET weight = 1 WHERE type = 'module' AND name = 'bean_callout'");
+}

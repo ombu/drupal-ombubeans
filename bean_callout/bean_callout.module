@@ -1,0 +1,109 @@
+<?php
+/**
+ * @file
+ * Callout bean tile.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_callout_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_callout_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_callout');
+
+  $plugins['bean_callout'] = array(
+    'label' => t('Callout'),
+    'handler' => array(
+      'class' => 'BeanCallout',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path . '/plugins',
+      'file' => 'BeanCallout.class.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function bean_callout_bean_style_info() {
+  return array(
+    'basic' => array(
+      'label' => 'Basic',
+      'class' => 'BeanStyleBasic',
+      'bean_types' => array(
+        'bean_callout',
+      ),
+    ),
+    'basic_carousel' => array(
+      'label' => 'Callout Carousel',
+      'class' => 'BeanStyleBasicCarousel',
+      'bean_types' => array(
+        'bean_callout',
+      ),
+    ),
+    'basic_accordion' => array(
+      'label' => 'Callout Accorion',
+      'class' => 'BeanStyleGrid',
+      'bean_types' => array(
+        'bean_callout',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options_alter().
+ */
+function bean_callout_bean_style_options_alter(&$options, $context) {
+  unset($options['']);
+
+  if ($context['bundle'] == 'bean_callout') {
+    unset($options['basic_carousel']);
+    unset($options['basic_accordion']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bean_callout_form_tiles_add_form_alter(&$form, $form_state) {
+  if (isset($form['bean_form'])) {
+    bean_callout_form_bean_form_alter($form['bean_form'], $form_state);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bean_callout_form_bean_form_alter(&$form, $form_state) {
+  switch ($form['#bundle']) {
+    case 'bean_callout':
+      $form['field_smartphone_behavior'][LANGUAGE_NONE]['#states'] = array(
+        'visible' => array(
+          'select[name="bean_style"]' => array('value' => 'basic'),
+        ),
+      );
+      unset($form['field_smartphone_behavior'][LANGUAGE_NONE]['#options']['_none']);
+      $form['field_smartphone_behavior']['#weight'] = $form['bean_style']['#weight'] + 0.5;
+
+      // Set bean style to "basic" if any other "basic + smartphone behavior"
+      // bean styles are selected, since those options are removed from the bean
+      // style list.
+      if (strpos($form['bean_style']['#default_value'], 'basic') === 0) {
+        $form['bean_style']['#default_value'] = 'basic';
+      }
+      break;
+  }
+}
