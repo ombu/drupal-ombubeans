@@ -1,0 +1,100 @@
+<?php
+
+/**
+ * @file
+ * CTA bean.
+ */
+
+/**
+ * Implements hook_bean_types_api_info().
+ */
+function bean_cta_bean_types_api_info() {
+  return array(
+    'api' => bean_current_version(),
+  );
+}
+
+/**
+ * Implements hook_bean_types().
+ */
+function bean_cta_bean_types() {
+  $plugins = array();
+  $plugin_path = drupal_get_path('module', 'bean_cta') . '/plugins';
+
+  $plugins['bean_cta'] = array(
+    'label' => t('Call to Action'),
+    'handler' => array(
+      'class' => 'BeanCTA',
+      'parent' => 'BeanPlugin',
+      'path' => $plugin_path,
+      'file' => 'BeanCTA.class.php',
+    ),
+    'editable' => TRUE,
+  );
+
+  return $plugins;
+}
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function bean_cta_bean_style_info() {
+  $styles = array(
+    'primary' => array(
+      'label' => 'Primary',
+      'class' => 'BeanStyleCTAPrimary',
+      'bean_types' => array(
+        'bean_cta',
+      ),
+    ),
+    'secondary' => array(
+      'label' => 'Secondary',
+      'class' => 'BeanStyleCTASecondary',
+      'bean_types' => array(
+        'bean_cta',
+      ),
+    ),
+    'stinge' => array(
+      'label' => 'Stinger',
+      'class' => 'BeanStyleCTAStinger',
+      'bean_types' => array(
+        'bean_cta',
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
+ * Implements hook_bean_style_options_alter().
+ */
+function bean_cta_bean_style_options_alter(&$options, $context) {
+  if ($context['bundle'] == 'bean_cta') {
+    unset($options['']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bean_cta_form_tiles_add_form_alter(&$form, $form_state) {
+  if (isset($form['bean_form'])) {
+    bean_cta_form_bean_form_alter($form['bean_form'], $form_state);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function bean_cta_form_bean_form_alter(&$form, $form_state) {
+  switch ($form['#bundle']) {
+    case 'bean_cta':
+      $form['field_cta_image'][LANGUAGE_NONE]['#states'] = array(
+        'visible' => array(
+          'select[name="bean_style"]' => array('value' => 'stinger'),
+        ),
+      );
+      break;
+  }
+}
