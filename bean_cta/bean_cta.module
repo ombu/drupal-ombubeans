@@ -54,7 +54,7 @@ function bean_cta_bean_style_info() {
         'bean_cta',
       ),
     ),
-    'stinge' => array(
+    'stinger' => array(
       'label' => 'Stinger',
       'class' => 'BeanStyleCTAStinger',
       'bean_types' => array(
