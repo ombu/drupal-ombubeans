@@ -132,13 +132,13 @@ function bean_callout_field_default_field_bases() {
     'type' => 'list_text',
   );
 
-  // Exported field_base: 'field_title'
-  $field_bases['field_title'] = array(
+  // Exported field_base: 'field_callout_title'
+  $field_bases['field_callout_title'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_title',
+    'field_name' => 'field_callout_title',
     'indexes' => array(
       'format' => array(
         0 => 'format',
