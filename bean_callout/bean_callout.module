@@ -53,13 +53,6 @@ function bean_callout_bean_style_info() {
         'bean_callout',
       ),
     ),
-    'basic_accordion' => array(
-      'label' => 'Callout Accorion',
-      'class' => 'BeanStyleGrid',
-      'bean_types' => array(
-        'bean_callout',
-      ),
-    ),
   );
 }
 
@@ -71,7 +64,6 @@ function bean_callout_bean_style_options_alter(&$options, $context) {
 
   if ($context['bundle'] == 'bean_callout') {
     unset($options['basic_carousel']);
-    unset($options['basic_accordion']);
   }
 }
 
