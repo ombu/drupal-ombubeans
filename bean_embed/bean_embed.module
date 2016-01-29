@@ -22,7 +22,7 @@ function bean_embed_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_embed') . '/plugins';
 
   $plugins['bean_embed'] = array(
-    'label' => t('Embed block'),
+    'label' => t('Embed'),
     'handler' => array(
       'class' => 'EmbedBean',
       'parent' => 'BeanPlugin',

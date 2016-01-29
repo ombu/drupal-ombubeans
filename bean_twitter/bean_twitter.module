@@ -22,7 +22,7 @@ function bean_twitter_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_twitter') . '/plugins';
 
   $plugins['twitter'] = array(
-    'label' => t('Twitter Block'),
+    'label' => t('Twitter'),
     'handler' => array(
       'class' => 'BeanTwitter',
       'parent' => 'BeanPlugin',

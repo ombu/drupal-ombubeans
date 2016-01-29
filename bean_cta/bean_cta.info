@@ -1,0 +1,12 @@
+name = bean_cta
+core = 7.x
+package = Features
+dependencies[] = bean
+features[features_api][] = api:2
+features[field_base][] = field_cta_link
+features[field_base][] = field_cta_link
+features[field_instance][] = bean-bean_cta-field_cta_image
+features[field_instance][] = bean-bean_cta-field_cta_link
+files[] = plugins/BeanStyleCTAPrimary.php
+files[] = plugins/BeanStyleCTASecondary.php
+files[] = plugins/BeanStyleCTAStinger.php

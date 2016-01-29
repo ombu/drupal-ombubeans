@@ -22,7 +22,7 @@ function bean_fpo_bean_types() {
   $plugin_path = drupal_get_path('module', 'bean_fpo') . '/plugins';
 
   $plugins['fpo'] = array(
-    'label' => t('FPO Block'),
+    'label' => t('FPO'),
     'handler' => array(
       'class' => 'FPOBean',
       'parent' => 'BeanPlugin',
@@ -33,7 +33,7 @@ function bean_fpo_bean_types() {
   );
 
   $plugins['fpo_hero'] = array(
-    'label' => t('FPO Hero Block'),
+    'label' => t('FPO Hero'),
     'handler' => array(
       'class' => 'FPOHeroBean',
       'parent' => 'BeanPlugin',
