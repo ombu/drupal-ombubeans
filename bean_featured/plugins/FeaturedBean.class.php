@@ -17,9 +17,12 @@ class FeaturedBean extends BeanPlugin {
     $featured_content = field_get_items('bean', $bean, 'field_featured_content');
 
     if ($featured_content) {
-      // Ensure that all nodes are published before printing.
+      // Ensure that all nodes are published before printing and that the proper
+      // node translation is loaded.
       foreach ($featured_content as $key => $value) {
-        if (!$value['entity']->status) {
+        $featured_content[$key]['entity'] = $node = $this->getTranslatedNode($value['entity']);
+
+        if (empty($node) || !$node->status) {
           unset($featured_content[$key]);
         }
       }
@@ -33,5 +36,38 @@ class FeaturedBean extends BeanPlugin {
     }
 
     return $content;
+  }
+
+  /**
+   * Returns the proper translated node.
+   */
+  protected function getTranslatedNode($node) {
+    global $language;
+
+    // If ombutranslation is enabled, swap out translated nodes.
+    if (module_exists('ombutranslation')) {
+      if ($node->language != $language->language) {
+        // First check if there's mirrors.
+        $mirrors = ombutranslation_node_translation_mirrors($node->nid);
+
+        // If current entity is mirroring to this language, then show as is.
+        if (isset($mirrors[$language->language]) && $mirrors[$language->language]->source == $node->language) {
+          return $node;
+        }
+
+        // Otherwise, try and load up translation.
+        $translations = translation_node_get_translations(!empty($node->tnid) ? $node->tnid : $node->nid);
+        if (isset($translations[$language->language])) {
+          return node_load($translations[$language->language]->nid);
+        }
+        else {
+          // No translation has been found, hide node from list.
+          return FALSE;
+        }
+      }
+    }
+    else {
+      return $node;
+    }
   }
 }
