@@ -60,9 +60,8 @@ function bean_callout_bean_style_info() {
  * Implements hook_bean_style_options_alter().
  */
 function bean_callout_bean_style_options_alter(&$options, $context) {
-  unset($options['']);
-
   if ($context['bundle'] == 'bean_callout') {
+    unset($options['']);
     unset($options['basic_carousel']);
   }
 }
