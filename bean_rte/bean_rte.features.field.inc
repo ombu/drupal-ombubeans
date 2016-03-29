@@ -37,7 +37,7 @@ function bean_rte_field_default_fields() {
       'locked' => '0',
       'module' => 'text',
       'settings' => array(),
-      'translatable' => '0',
+      'translatable' => '1',
       'type' => 'text_long',
     ),
     'field_instance' => array(
