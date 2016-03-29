@@ -47,15 +47,8 @@ class FeaturedBean extends BeanPlugin {
     // If ombutranslation is enabled, swap out translated nodes.
     if (module_exists('ombutranslation')) {
       if ($node->language != $language->language) {
-        // First check if there's mirrors.
-        $mirrors = ombutranslation_node_translation_mirrors($node->nid);
 
-        // If current entity is mirroring to this language, then show as is.
-        if (isset($mirrors[$language->language]) && $mirrors[$language->language]->source == $node->language) {
-          return $node;
-        }
-
-        // Otherwise, try and load up translation.
+        // Try and load up a translation.
         $translations = translation_node_get_translations(!empty($node->tnid) ? $node->tnid : $node->nid);
         if (isset($translations[$language->language])) {
           return node_load($translations[$language->language]->nid);
@@ -66,8 +59,6 @@ class FeaturedBean extends BeanPlugin {
         }
       }
     }
-    else {
-      return $node;
-    }
+    return $node;
   }
 }
