@@ -37,7 +37,7 @@ function bean_link_field_default_fields() {
         'title_value' => '',
         'url' => 0,
       ),
-      'translatable' => '0',
+      'translatable' => '1',
       'type' => 'link_field',
     ),
     'field_instance' => array(
