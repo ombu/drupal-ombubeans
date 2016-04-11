@@ -65,8 +65,17 @@ class MenuBlockBean extends BeanPlugin {
    * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+    // Handle multiple languages.
+    if (is_array($bean->parent_mlid)) {
+      $language = entity_language('bean', $bean);
+      $mlid = isset($bean->parent_mlid[$language]) ? $bean->parent_mlid[$language] : ':0';
+    }
+    else {
+      $mlid = $bean->parent_mlid;
+    }
+
     // Todo: allow other menus to be selected.
-    list($menu_name, $parent_mlid) = explode(':', $bean->parent_mlid);
+    list($menu_name, $parent_mlid) = explode(':', $mlid);
     $tree = menu_tree_all_data($menu_name);
 
     if ($parent_mlid) {
