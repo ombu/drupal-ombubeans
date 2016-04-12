@@ -65,10 +65,11 @@ class MenuBlockBean extends BeanPlugin {
    * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
+    global $language;
+
     // Handle multiple languages.
     if (is_array($bean->parent_mlid)) {
-      $language = entity_language('bean', $bean);
-      $mlid = isset($bean->parent_mlid[$language]) ? $bean->parent_mlid[$language] : ':0';
+      $mlid = !empty($bean->parent_mlid[$language->language]) ? $bean->parent_mlid[$language->language] : ':0';
     }
     else {
       $mlid = $bean->parent_mlid;
