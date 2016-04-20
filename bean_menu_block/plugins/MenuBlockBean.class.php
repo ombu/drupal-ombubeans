@@ -69,7 +69,12 @@ class MenuBlockBean extends BeanPlugin {
 
     // Handle multiple languages.
     if (is_array($bean->parent_mlid)) {
-      $mlid = !empty($bean->parent_mlid[$language->language]) ? $bean->parent_mlid[$language->language] : ':0';
+      if (!empty($bean->parent_mlid[$language->language])) {
+        $mlid = $bean->parent_mlid[$language->language];
+      }
+      else {
+        $mlid = $bean->parent_mlid[language_default()->language];
+      }
     }
     else {
       $mlid = $bean->parent_mlid;
