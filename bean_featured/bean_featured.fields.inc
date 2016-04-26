@@ -40,7 +40,7 @@ function bean_featured_get_default_fields() {
           ),
           'view' => array(
             'args' => array(),
-            'display_name' => 'entityreference_1',
+            'display_name' => 'entityreference',
             'view_name' => 'content_select',
           ),
         ),
