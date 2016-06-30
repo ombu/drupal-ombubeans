@@ -67,6 +67,8 @@ class MenuBlockBean extends BeanPlugin {
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     global $language;
 
+    $trees =& drupal_static('MenuBlockBean:menu_trees', array());
+
     // Handle multiple languages.
     if (is_array($bean->parent_mlid)) {
       if (!empty($bean->parent_mlid[$language->language])) {
@@ -82,7 +84,11 @@ class MenuBlockBean extends BeanPlugin {
 
     // Todo: allow other menus to be selected.
     list($menu_name, $parent_mlid) = explode(':', $mlid);
-    $tree = menu_tree_all_data($menu_name);
+    if (empty($trees[$menu_name])) {
+      $trees[$menu_name] = menu_tree_all_data($menu_name);
+    }
+
+    $tree = $trees[$menu_name];
 
     if ($parent_mlid) {
       $parent = menu_link_load($parent_mlid);
