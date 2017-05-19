@@ -10,7 +10,7 @@
 function bean_callout_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'bean-bean_callout-field_callout_item'
+  // Exported field_instance: 'bean-bean_callout-field_callout_item'.
   $field_instances['bean-bean_callout-field_callout_item'] = array(
     'bundle' => 'bean_callout',
     'default_value' => NULL,
@@ -47,7 +47,7 @@ function bean_callout_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'bean-bean_callout-field_smartphone_behavior'
+  // Exported field_instance: 'bean-bean_callout-field_smartphone_behavior'.
   $field_instances['bean-bean_callout-field_smartphone_behavior'] = array(
     'bundle' => 'bean_callout',
     'default_value' => array(
@@ -91,7 +91,7 @@ function bean_callout_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_callout_item-field_callout_description'
+  // 'field_collection_item-field_callout_item-field_callout_description'.
   $field_instances['field_collection_item-field_callout_item-field_callout_description'] = array(
     'bundle' => 'field_callout_item',
     'default_value' => NULL,
@@ -121,14 +121,15 @@ function bean_callout_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_callout_item-field_callout_image'
+  // 'field_collection_item-field_callout_item-field_callout_image'.
   $field_instances['field_collection_item-field_callout_item-field_callout_image'] = array(
     'bundle' => 'field_callout_item',
+    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -160,7 +161,7 @@ function bean_callout_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'ombumedia',
+      'module' => 'image',
       'settings' => array(
         'allowed_schemes' => array(
           'oembed' => 0,
@@ -186,14 +187,16 @@ function bean_callout_field_default_field_instances() {
             0 => 'full',
           ),
         ),
+        'preview_image_style' => 'thumbnail',
+        'progress_indicator' => 'throbber',
       ),
-      'type' => 'ombumedia',
+      'type' => 'image_image',
       'weight' => 1,
     ),
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_callout_item-field_callout_link'
+  // 'field_collection_item-field_callout_item-field_callout_link'.
   $field_instances['field_collection_item-field_callout_item-field_callout_link'] = array(
     'bundle' => 'field_callout_item',
     'default_value' => NULL,
@@ -245,7 +248,7 @@ function bean_callout_field_default_field_instances() {
   );
 
   // Exported field_instance:
-  // 'field_collection_item-field_callout_item-field_callout_title'
+  // 'field_collection_item-field_callout_item-field_callout_title'.
   $field_instances['field_collection_item-field_callout_item-field_callout_title'] = array(
     'bundle' => 'field_callout_item',
     'default_value' => NULL,
@@ -275,18 +278,68 @@ function bean_callout_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
+      'weight' => 3,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_callout_item-field_image_link'.
+  $field_instances['field_collection_item-field_callout_item-field_image_link'] = array(
+    'bundle' => 'field_callout_item',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_image_link',
+    'label' => 'Image Link',
+    'required' => 0,
+    'settings' => array(
+      'attributes' => array(
+        'class' => '',
+        'configurable_title' => 0,
+        'rel' => '',
+        'target' => 'default',
+        'title' => '',
+      ),
+      'display' => array(
+        'url_cutoff' => 80,
+      ),
+      'enable_tokens' => 1,
+      'rel_remove' => 'default',
+      'title' => 'none',
+      'title_maxlength' => 128,
+      'title_value' => '',
+      'url' => 0,
+      'user_register_form' => FALSE,
+      'validate_url' => 1,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'link',
+      'settings' => array(),
+      'type' => 'link_field',
       'weight' => 2,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Translatables
   // Included for use with string extractors like potx.
   t('Callout Item');
-  t('Callout Link');
+  t('Image');
+  t('Image Link');
   t('Link');
   t('Smartphone Behavior');
+  t('Text');
   t('Title');
-  t('Title image');
 
   return $field_instances;
 }
