@@ -129,7 +129,6 @@ function bean_callout_field_default_field_instances() {
   // 'field_collection_item-field_callout_item-field_callout_image'.
   $field_instances['field_collection_item-field_callout_item-field_callout_image'] = array(
     'bundle' => 'field_callout_item',
-    'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
     'display' => array(
@@ -161,7 +160,7 @@ function bean_callout_field_default_field_instances() {
     ),
     'widget' => array(
       'active' => 1,
-      'module' => 'image',
+      'module' => 'media',
       'settings' => array(
         'allowed_schemes' => array(
           'oembed' => 0,
@@ -187,10 +186,10 @@ function bean_callout_field_default_field_instances() {
             0 => 'full',
           ),
         ),
-        'preview_image_style' => 'thumbnail',
+        'browser_plugins' => array(),
         'progress_indicator' => 'throbber',
       ),
-      'type' => 'image_image',
+      'type' => 'media_generic',
       'weight' => 1,
     ),
   );
