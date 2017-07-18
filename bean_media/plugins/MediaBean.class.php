@@ -19,11 +19,12 @@ class MediaBean extends BeanPlugin {
       $link_url = url($url, array('absolute' => TRUE));
 
       // Get if opening in new window.
-      if (isset($content['bean'][$bean->delta]['field_image_link']['#items'][0]['attributes']['target'])) {
-        $target = $content['bean'][$bean->delta]['field_image_link']['#items'][0]['attributes']['target'];
-        if ($target != '') {
+      if (isset($content['bean'][$bean->delta]['field_image_link_target'])) {
+        $target = $content['bean'][$bean->delta]['field_image_link_target']['#items'][0]['value'];
+        if ($target == 1) {
           $link_target = 'target="_blank"';
         }
+        unset($content['bean'][$bean->delta]['field_image_link_target']);
       }
 
       unset($content['bean'][$bean->delta]['field_image_link']);
