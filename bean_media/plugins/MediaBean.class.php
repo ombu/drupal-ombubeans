@@ -28,7 +28,7 @@ class MediaBean extends BeanPlugin {
       }
 
       unset($content['bean'][$bean->delta]['field_image_link']);
-      $content['bean'][$bean->delta]['field_bean_media']['#prefix'] = '<a href="' . $link_url  . '" ' . $link_target . ' />';
+      $content['bean'][$bean->delta]['field_bean_media']['#prefix'] = '<a href="' . $link_url  . '" ' . $link_target . ' class="image-url" />';
       $content['bean'][$bean->delta]['field_bean_media']['#suffix'] = '</a>';
     }
     return $content;
