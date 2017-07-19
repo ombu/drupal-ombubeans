@@ -11,6 +11,7 @@ class MediaBean extends BeanPlugin {
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
     if (isset($content['bean'][$bean->delta]['field_image_link']['#items'][0]['url']) && isset($content['bean'][$bean->delta]['field_image_link'])) {
+      drupal_add_css(drupal_get_path('module', 'bean_media') . '/css/bean_media.css');
       $link_target = '';
       $link_url = '';
 
