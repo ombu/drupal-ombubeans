@@ -54,7 +54,13 @@ class MenuBlockBean extends BeanPlugin {
     );
 
     $form['depth'] = array(
-      '#type' => 'hidden',
+      '#type' => 'select',
+      '#title' => t('Menu Item\'s Children'),
+      '#options' => array(
+        1 => "Don't Show Children",
+        2 => 'Show Children',
+      ),
+      '#description' => t('Showing children will create a flyout menu that shows when hovering over the menu item.'),
       '#default_value' => $bean->depth,
     );
 
