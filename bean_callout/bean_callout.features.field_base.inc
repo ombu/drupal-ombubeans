@@ -10,30 +10,7 @@
 function bean_callout_field_default_field_bases() {
   $field_bases = array();
 
-
-  // Exported field_base: 'field_callout_item'
-  $field_bases['field_callout_item'] = array(
-    'active' => 1,
-    'cardinality' => -1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_callout_item',
-    'indexes' => array(
-      'revision_id' => array(
-        0 => 'revision_id',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'field_collection',
-    'settings' => array(
-      'hide_blank_items' => 1,
-      'path' => '',
-    ),
-    'translatable' => 0,
-    'type' => 'field_collection',
-  );
-
-  // Exported field_base: 'field_callout_description'
+  // Exported field_base: 'field_callout_description'.
   $field_bases['field_callout_description'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -55,7 +32,7 @@ function bean_callout_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_callout_image'
+  // Exported field_base: 'field_callout_image'.
   $field_bases['field_callout_image'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -77,7 +54,33 @@ function bean_callout_field_default_field_bases() {
     'type' => 'image',
   );
 
-  // Exported field_base: 'field_callout_link'
+  // Exported field_base: 'field_callout_item'.
+  $field_bases['field_callout_item'] = array(
+    'active' => 1,
+    'cardinality' => -1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_callout_item',
+    'indexes' => array(
+      'revision_id' => array(
+        0 => 'revision_id',
+      ),
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'field_collection',
+    'settings' => array(
+      'hide_blank_items' => 1,
+      'hide_initial_item' => FALSE,
+      'path' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'field_collection',
+  );
+
+  // Exported field_base: 'field_callout_link'.
   $field_bases['field_callout_link'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -106,7 +109,49 @@ function bean_callout_field_default_field_bases() {
     'type' => 'link_field',
   );
 
-  // Exported field_base: 'field_smartphone_behavior'
+  // Exported field_base: 'field_callout_title'.
+  $field_bases['field_callout_title'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_callout_title',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_image_overlay_text'.
+  $field_bases['field_image_overlay_text'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_image_overlay_text',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 255,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
+  );
+
+  // Exported field_base: 'field_smartphone_behavior'.
   $field_bases['field_smartphone_behavior'] = array(
     'active' => 1,
     'cardinality' => 1,
@@ -130,27 +175,6 @@ function bean_callout_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'list_text',
-  );
-
-  // Exported field_base: 'field_callout_title'
-  $field_bases['field_callout_title'] = array(
-    'active' => 1,
-    'cardinality' => 1,
-    'deleted' => 0,
-    'entity_types' => array(),
-    'field_name' => 'field_callout_title',
-    'indexes' => array(
-      'format' => array(
-        0 => 'format',
-      ),
-    ),
-    'locked' => 0,
-    'module' => 'text',
-    'settings' => array(
-      'max_length' => 255,
-    ),
-    'translatable' => 0,
-    'type' => 'text',
   );
 
   return $field_bases;
