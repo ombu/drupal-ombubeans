@@ -3,3 +3,4 @@ description = Similar functionality of menu block, but in bean form.
 version = 7.x-0.1
 package = bean
 core = 7.x
+files[] = plugins/MenuBlockBeanStyle.php

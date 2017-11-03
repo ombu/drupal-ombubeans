@@ -34,3 +34,28 @@ function bean_menu_block_bean_types() {
 
   return $plugins;
 }
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function bean_menu_block_bean_style_info() {
+  return array(
+    'bean_menu_style'  => array(
+      'label' => 'Default',
+      'class' => 'MenuBlockBeanStyle',
+      'bean_types' => array(
+        'bean_menu_block',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options().
+ */
+function bean_menu_block_bean_style_options(&$options, $context) {
+  // Remove default style for bean_link styles.
+  if ($context['bean']->type == 'bean_menu_block') {
+    unset($options['']);
+  }
+}
