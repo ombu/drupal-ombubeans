@@ -137,7 +137,7 @@ function bean_callout_field_default_field_instances() {
         'module' => 'image',
         'settings' => array(
           'image_link' => '',
-          'image_style' => 'full',
+          'image_style' => 'nwc_callout',
         ),
         'type' => 'image',
         'weight' => 1,
