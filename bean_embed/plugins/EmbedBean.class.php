@@ -29,7 +29,6 @@ class EmbedBean extends BeanPlugin {
       '#title' => t('URL'),
       '#description' => t('Enter the URL to load within this iFrame'),
       '#default_value' => isset($bean->url) ? $bean->url : '',
-      '#required' => TRUE,
       '#maxlength' => 500,
     );
 
@@ -47,7 +46,7 @@ class EmbedBean extends BeanPlugin {
    * Implements parent::validate().
    */
   public function validate($values, &$form_state) {
-    if (!valid_url($values['url'])) {
+    if (!empty($values['url']) && !valid_url($values['url'])) {
       form_set_error('url', t('Please enter a valid URL'));
     }
     if ($values['height'] && !is_numeric($values['height'])) {
@@ -59,15 +58,9 @@ class EmbedBean extends BeanPlugin {
    * Implements parent::view().
    */
   public function view($bean, $content, $view_mode = 'default', $langcode = NULL) {
-    if (isset($bean->url)) {
-      $content['bean'][$bean->delta]['iframe'] = array(
-        '#markup' => t('<iframe id="!id" frameborder="0" src="!src" width="!width" height="!height"></iframe>', array(
-          '!src' => $bean->url,
-          '!width' => isset($bean->width) ? $bean->width : '100%',
-          '!height' => isset($bean->height) ? $bean->height : '100%',
-          '!id' => $bean->delta . '-iframe',
-        )),
-      );
+    // Allow bean styles to alter build.
+    if (module_exists('bean_style')) {
+      bean_style_view_alter($content, $bean);
     }
 
     return $content;
