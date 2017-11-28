@@ -34,3 +34,29 @@ function bean_embed_bean_types() {
 
   return $plugins;
 }
+
+/**
+ * Implements hook_bean_style_info().
+ */
+function bean_embed_bean_style_info() {
+  return array(
+    'bean_embed_style'  => array(
+      'label' => 'URL',
+      'class' => 'BeanStyleIframe',
+      'bean_types' => array(
+        'bean_embed',
+      ),
+      'file' => 'BeanStyleIframe.php',
+    ),
+  );
+}
+
+/**
+ * Implements hook_bean_style_options().
+ */
+function bean_embed_bean_style_options(&$options, $context) {
+  // Remove default style for bean_embed styles.
+  if ($context['bean']->type == 'bean_embed') {
+    unset($options['']);
+  }
+}
