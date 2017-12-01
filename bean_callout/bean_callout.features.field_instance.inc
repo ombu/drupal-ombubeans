@@ -15,7 +15,7 @@ function bean_callout_field_default_field_instances() {
     'bundle' => 'bean_callout',
     'default_value' => NULL,
     'deleted' => 0,
-    'description' => '',
+    'description' => '<b>To ensure this tile displays correctly please include an <em>image, title, text</em>, and <em>link</em> with each callout item.</b>',
     'display' => array(
       'default' => array(
         'label' => 'hidden',
@@ -45,6 +45,7 @@ function bean_callout_field_default_field_instances() {
       'type' => 'field_collection_embed',
       'weight' => 3,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Exported field_instance: 'bean-bean_callout-field_smartphone_behavior'.
@@ -123,6 +124,7 @@ function bean_callout_field_default_field_instances() {
       'type' => 'text_textarea',
       'weight' => 3,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Exported field_instance:
@@ -167,7 +169,6 @@ function bean_callout_field_default_field_instances() {
           'public' => 'public',
         ),
         'allowed_types' => array(
-          'audio' => 0,
           'document' => 0,
           'image' => 'image',
           'video' => 0,
@@ -190,6 +191,7 @@ function bean_callout_field_default_field_instances() {
       'type' => 'ombumedia',
       'weight' => 0,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Exported field_instance:
@@ -242,6 +244,7 @@ function bean_callout_field_default_field_instances() {
       'type' => 'link_field',
       'weight' => 4,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Exported field_instance:
@@ -277,6 +280,7 @@ function bean_callout_field_default_field_instances() {
       'type' => 'text_textfield',
       'weight' => 2,
     ),
+    'workbench_access_field' => 0,
   );
 
   // Exported field_instance:
@@ -316,6 +320,7 @@ function bean_callout_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('<b>To ensure this tile displays correctly please include an <em>image, title, text</em>, and <em>link</em> with each callout item.</b>');
   t('Callout Item');
   t('Image');
   t('Image overlay text');
