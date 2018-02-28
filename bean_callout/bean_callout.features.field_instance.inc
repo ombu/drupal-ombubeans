@@ -122,7 +122,7 @@ function bean_callout_field_default_field_instances() {
         'rows' => 5,
       ),
       'type' => 'text_textarea',
-      'weight' => 3,
+      'weight' => 4,
     ),
     'workbench_access_field' => 0,
   );
@@ -242,7 +242,7 @@ function bean_callout_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 4,
+      'weight' => 5,
     ),
     'workbench_access_field' => 0,
   );
@@ -278,7 +278,7 @@ function bean_callout_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 2,
+      'weight' => 3,
     ),
     'workbench_access_field' => 0,
   );
@@ -318,15 +318,55 @@ function bean_callout_field_default_field_instances() {
     'workbench_access_field' => 0,
   );
 
+  // Exported field_instance:
+  // 'field_collection_item-field_callout_item-field_tinted'.
+  $field_instances['field_collection_item-field_callout_item-field_tinted'] = array(
+    'bundle' => 'field_callout_item',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Checking this box will make photo slightly darker to enhance text overlay readability.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_tinted',
+    'label' => 'Tinted?',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 2,
+    ),
+    'workbench_access_field' => 0,
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('<b>To ensure this tile displays correctly please include an <em>image, title, text</em>, and <em>link</em> with each callout item.</b>');
   t('Callout Item');
+  t('Checking this box will make photo slightly darker to enhance text overlay readability.');
   t('Image');
   t('Image overlay text');
   t('Link');
   t('Smartphone Behavior');
   t('Text');
+  t('Tinted?');
   t('Title');
 
   return $field_instances;
