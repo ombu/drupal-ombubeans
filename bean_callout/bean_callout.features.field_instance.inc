@@ -48,49 +48,6 @@ function bean_callout_field_default_field_instances() {
     'workbench_access_field' => 0,
   );
 
-  // Exported field_instance: 'bean-bean_callout-field_smartphone_behavior'.
-  $field_instances['bean-bean_callout-field_smartphone_behavior'] = array(
-    'bundle' => 'bean_callout',
-    'default_value' => array(
-      0 => array(
-        'value' => 'stacked',
-      ),
-    ),
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 1,
-      ),
-    ),
-    'entity_type' => 'bean',
-    'field_name' => 'field_smartphone_behavior',
-    'label' => 'Smartphone Behavior',
-    'required' => 0,
-    'settings' => array(
-      'select2_integration' => array(
-        'styling' => array(
-          'dropdownAutoWidth' => 0,
-          'placeholder' => '',
-        ),
-        'use_select2' => 0,
-      ),
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'options',
-      'settings' => array(
-        'use_select2' => FALSE,
-      ),
-      'type' => 'options_select',
-      'weight' => 2,
-    ),
-  );
-
   // Exported field_instance:
   // 'field_collection_item-field_callout_item-field_callout_description'.
   $field_instances['field_collection_item-field_callout_item-field_callout_description'] = array(
@@ -364,7 +321,6 @@ function bean_callout_field_default_field_instances() {
   t('Image');
   t('Image overlay text');
   t('Link');
-  t('Smartphone Behavior');
   t('Text');
   t('Tinted?');
   t('Title');
