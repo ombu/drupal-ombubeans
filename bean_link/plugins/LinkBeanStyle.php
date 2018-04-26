@@ -27,8 +27,10 @@ class LinkBeanStyle extends BeanStyle {
    * Implements parent::prepareItems().
    */
   protected function prepareItems($build, $type) {
-    foreach (element_children($build['field_bean_link_links']) as $child) {
-      $this->items[] = drupal_render($build['field_bean_link_links'][$child]);
+    if (isset($build['field_bean_link_links'])) {
+      foreach (element_children($build['field_bean_link_links']) as $child) {
+        $this->items[] = drupal_render($build['field_bean_link_links'][$child]);
+      }
     }
   }
 }
