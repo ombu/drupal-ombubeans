@@ -20,27 +20,32 @@ class FeaturedBean extends BeanPlugin {
 
     if ($featured_content || $featured_home_header || $featured_home_content) {
       // Ensure that all nodes are published before printing.
-      foreach ($featured_content as $key => $value) {
-        if (!$value['entity']->status) {
-          unset($featured_content[$key]);
+      if ($featured_content) {
+        foreach ($featured_content as $key => $value) {
+          if (!$value['entity']->status) {
+            unset($featured_content[$key]);
+          }
         }
+        $content['bean'][$bean->delta]['#featured_content'] = $featured_content;
       }
 
-      foreach ($featured_home_header as $key => $value) {
-        if (!$value['entity']->status) {
-          unset($featured_home_header[$key]);
+      if ($featured_home_header) {
+        foreach ($featured_home_header as $key => $value) {
+          if (!$value['entity']->status) {
+            unset($featured_home_header[$key]);
+          }
         }
+        $content['bean'][$bean->delta]['#featured_home_header'] = $featured_home_header;
       }
 
-      foreach ($featured_home_content as $key => $value) {
-        if (!$value['entity']->status) {
-          unset($featured_home_content[$key]);
+      if ($featured_home_content) {
+        foreach ($featured_home_content as $key => $value) {
+          if (!$value['entity']->status) {
+            unset($featured_home_content[$key]);
+          }
         }
+        $content['bean'][$bean->delta]['#featured_home_content'] = $featured_home_content;
       }
-
-      $content['bean'][$bean->delta]['#featured_content'] = $featured_content;
-      $content['bean'][$bean->delta]['#featured_home_header'] = $featured_home_header;
-      $content['bean'][$bean->delta]['#featured_home_content'] = $featured_home_content;
 
       // Allow bean styles to alter build.
       if (module_exists('bean_style')) {
